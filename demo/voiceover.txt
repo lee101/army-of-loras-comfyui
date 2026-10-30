@@ -1,0 +1,17 @@
+Army of LoRAs. Type one prompt in ComfyUI, and an army of sixty-five community LoRAs decides how to render it, across five open image and video models.
+
+Hugging Face has thousands of great LoRAs. But which one fits your prompt, on which base model, at what strength, with which trigger word?
+
+So the router decides. The prompt is embedded with pybed, our static int-eight embedding model. There's no transformer, just a token lookup, so it takes about two milliseconds on the CPU. It scores every LoRA's description, picks image or video, and deploys the model whose army fits best.
+
+I scraped seven hundred and fifty-five adapters, dropped anything adult, any likeness or franchise, and anything unlicensed, then hand-picked sixty-five.
+
+A sticker of a red panda, in pixel art. FLUX klein, with the Stickers and Pixel Art LoRAs drafted together, one per role.
+
+An isometric diorama gets the Isometric LoRA.
+
+Crochet amigurumi, straight from the community.
+
+In ComfyUI it's one graph with all five models. Lazy inputs mean only the routed model ever loads, and each drafted LoRA downloads from its author on first use.
+
+Everything is open source: the nodes, workflows, catalog, and credits for every LoRA author. Army of LoRAs, for ComfyUI.

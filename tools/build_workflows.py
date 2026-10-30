@@ -20,7 +20,6 @@ OUT = ROOT / "workflows"
 # Model files, as named in each official Comfy-Org repo (see README "Models").
 FILES = {
     "flux_unet": "flux-2-klein-base-9b-fp8.safetensors",
-    "flux_distill_lora": "flux-2-klein-9b_extracted_lora_rank_256-fp8e5m2.safetensors",
     "flux_te": "qwen_3_8b.safetensors",
     "flux_vae": "flux2-vae.safetensors",
     "qwen_unet": "qwen_image_2.1_int8_convrot.safetensors",
@@ -73,14 +72,12 @@ def router(g: Graph, prompt: str, family: str = "auto") -> str:
 
 def flux_branch(g: Graph, r: str, seed: int) -> list:
     unet = g.add("UNETLoader", "FLUX.2 klein 9B base fp8", unet_name=FILES["flux_unet"], weight_dtype="default")
-    m = g.add("LoraLoaderModelOnly", "klein 9B distill (4-step)", model=[unet, 0],
-              lora_name=FILES["flux_distill_lora"], strength_model=1.0)
-    m = g.add("ArmyLoraApply", "Army: apply FLUX LoRAs", model=[m, 0], plan=[r, 0], family="flux2_klein9b")
+    m = g.add("ArmyLoraApply", "Army: apply FLUX LoRAs", model=[unet, 0], plan=[r, 0], family="flux2_klein9b")
     clip = g.add("CLIPLoader", clip_name=FILES["flux_te"], type="flux2", device="default")
     pos = g.add("CLIPTextEncode", text=[r, 1], clip=[clip, 0])
     neg = g.add("ConditioningZeroOut", conditioning=[pos, 0])
-    guider = g.add("CFGGuider", model=[m, 0], positive=[pos, 0], negative=[neg, 0], cfg=1.0)
-    sigmas = g.add("Flux2Scheduler", steps=4, width=1024, height=1024)
+    guider = g.add("CFGGuider", model=[m, 0], positive=[pos, 0], negative=[neg, 0], cfg=3.5)
+    sigmas = g.add("Flux2Scheduler", steps=20, width=1024, height=1024)
     latent = g.add("EmptyFlux2LatentImage", width=1024, height=1024, batch_size=1)
     s = g.add("SamplerCustomAdvanced", noise=[g.add("RandomNoise", noise_seed=seed), 0], guider=[guider, 0],
               sampler=[g.add("KSamplerSelect", sampler_name="euler"), 0], sigmas=[sigmas, 0],

@@ -31,15 +31,15 @@ def L(id, name, repo, file, license, positive, avoid=(), keywords=(), exclude=()
 AG = "artificialguybr/"
 F = "[FLUX.2.Klein]"
 flux = dict(
-    family="flux2_klein9b", label="FLUX.2 [klein] 9B (4-step distilled)", mode="image",
-    base="black-forest-labs/FLUX.2-klein-9b-fp8", base_license="FLUX Non-Commercial License",
+    family="flux2_klein9b", label="FLUX.2 [klein] 9B base (20 steps)", mode="image",
+    base="black-forest-labs/FLUX.2-klein-base-9b-fp8", base_license="FLUX Non-Commercial License",
     describes=["fast stylised illustration and graphic design", "stickers, icons, logos and emoji",
                "pixel art, isometric and 3d render game assets", "cartoon and children's book art",
                "retro photo looks like polaroid and analog film"],
     keywords=["sticker*", "logo", "icon*", "emoji", "pixel art", "isometric", "coloring book", "doodle",
               "amigurumi", "crochet", "mockup", "t-shirt", "album cover", "book cover", "polaroid"],
     prior=0.02, avoid_weight=0.5, max_total_strength=1.7, min_score=0.40,
-    settings=dict(steps=4, cfg=1.0, sampler="euler", scheduler="simple", width=1024, height=1024),
+    settings=dict(steps=20, cfg=3.5, sampler="euler", scheduler="simple", width=1024, height=1024),
     loras=[
         L("redmond_pixelart", "Pixel Art (Redmond)", AG + "PIXELART-REDMOND-FLUXKLEIN9B", F + "PixelArt_Redmond.safetensors", "apache-2.0",
           ["pixel art game sprite", "retro 8-bit pixel art scene", "16-bit video game screenshot with pixels"],

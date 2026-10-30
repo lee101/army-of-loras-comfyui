@@ -79,7 +79,7 @@ def slide_problem(catalogs: dict) -> Image.Image:
     for i, q in enumerate(qs):
         d.text((140, 260 + i * 78), "?  " + q, font=font(42), fill=DIM if i % 2 else TEXT)
     n = sum(len(c["loras"]) for c in catalogs.values())
-    d.text((140, 700), f"755 adapters scraped from Hugging Face -> 227 SFW + licensed -> {n} hand-picked",
+    d.text((140, 700), f"755 adapters scraped from Hugging Face -> open or community licensed -> {n} hand-picked",
            font=font(34), fill=ACCENT)
     footer(d)
     return img
@@ -88,7 +88,7 @@ def slide_problem(catalogs: dict) -> Image.Image:
 def slide_how() -> Image.Image:
     img, d = canvas()
     d.text((100, 70), "How the router decides", font=font(60, True), fill=TEXT)
-    boxes = [("prompt", "SFW gate"), ("pybed embed", "int8 static, 512-d"), ("image or video?", "motion cues"),
+    boxes = [("prompt", "any text"), ("pybed embed", "int8 static, 512-d"), ("image or video?", "motion cues"),
              ("score the army", "cos(positive) - avoid + keyword"), ("pick the model", "best army fit"),
              ("draft LoRAs", "1 per group, by confidence"), ("ComfyUI graph", "only that branch runs")]
     bw, bh, gap, y0 = 236, 150, 26, 330

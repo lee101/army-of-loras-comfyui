@@ -9,11 +9,34 @@ which prompt, on which base model, at what strength, with which trigger word. Ar
 choice for you inside ComfyUI using [pybed](https://github.com/lee101/pybed) static int8 embeddings,
 then downloads and applies the chosen LoRAs on the fly.
 
-- Demo video (2 min): `demo/army-of-loras-demo.mp4` (see [Demo](#demo))
-- Try it online: **[ebank.nz art generator](https://ebank.nz)** and **[manifoldgen.com](https://manifoldgen.com)** run a
-  similar pybed LoRA-routing system in production (our C inference server's `olora_route`, which this repo ports to ComfyUI)
-- Try it locally: run ComfyUI with this node pack and open **`http://127.0.0.1:8188/army/studio`**
+- **Demo video:** [demo/army-of-loras-demo.mp4](demo/army-of-loras-demo.mp4) (85 s, AI voiceover)
+- **Try it online:** the same kind of embedding-based LoRA routing runs in production behind
+  [netwrck.com](https://netwrck.com), the [ebank.nz](https://ebank.nz) art generator,
+  [manifoldgen.com](https://manifoldgen.com) and [openpaths.io](https://openpaths.io) (see [In production](#in-production))
+- **Try it locally:** run ComfyUI with this node pack and open **`http://127.0.0.1:8188/army/studio`**
 - Everything is SFW-only, and every LoRA is open-licensed or under its base model's community licence: [docs/CREDITS.md](docs/CREDITS.md)
+
+https://github.com/lee101/army-of-loras-comfyui/raw/main/demo/army-of-loras-demo.mp4
+
+## Results
+
+Real outputs from `demo/prompts.txt` through `workflows/army_auto.json` (router on `auto`, seed 42, one
+RTX 3090 Ti). Each image's exact routing decision is in the `.plan.json` next to it, and embedded in the PNG.
+
+| | prompt | routed to | drafted LoRAs |
+|---|---|---|---|
+| <img src="demo/results/00_flux2_klein9b.png" width="220"> | a cute sticker of a red panda eating ramen, pixel art | FLUX.2 [klein] 9B | Stickers 0.90, Pixel Art 0.80 |
+| <img src="demo/results/01_flux2_klein9b.png" width="220"> | isometric diorama of a cozy wizard library with floating books | FLUX.2 [klein] 9B | Isometric 0.90 |
+| <img src="demo/results/02_flux2_klein9b.png" width="220"> | a crochet amigurumi octopus reading a newspaper on a wooden table | FLUX.2 [klein] 9B | Crochet Amigurumi 0.90 |
+| <img src="demo/results/03_flux2_klein9b.png" width="220"> | claymation snail astronaut planting a flag on a mushroom planet | FLUX.2 [klein] 9B | Clay Animation 0.85 |
+| <img src="demo/results/04_flux2_klein9b.png" width="220"> | technical blueprint wireframe of a vintage steam locomotive | FLUX.2 [klein] 9B | Blueprint Wireframe 0.90 |
+
+Status: the FLUX.2 branch is verified end to end (routing, on-demand LoRA download, sampling, saving).
+The Qwen-Image 2.1, MOSS, LTX-2.3 and H3 branches are wired from the official Comfy-Org templates and
+their prompts route correctly (see `tests/`), but their demo renders have not been run yet. Run
+`python scripts/run_prompt.py --batch demo/prompts.txt` to generate them.
+
+![Army Studio](docs/studio.png)
 
 ![army_auto workflow](docs/workflow_auto.png)
 
@@ -71,7 +94,7 @@ HTTP routes added to the ComfyUI server: `/army/studio` (the one-page app), `/ar
 
 | family | base model (speed-up) | mode | LoRAs |
 |---|---|---|---|
-| `flux2_klein9b` | FLUX.2 [klein] 9B fp8 (4-step distilled) | image | 30: pixel art, isometric, 3D render, claymation, amigurumi, coloring book, stickers, logos, emoji, album/book covers, blueprint, film looks... |
+| `flux2_klein9b` | FLUX.2 [klein] 9B base fp8 (20 steps, CFG 3.5) | image | 30: pixel art, isometric, 3D render, claymation, amigurumi, coloring book, stickers, logos, emoji, album/book covers, blueprint, film looks... |
 | `qwen_image21` | Qwen-Image 2.1 (Viggle 6-step turbo) | image | 8: film stills, grainscape, Y2K digicam, outrun, heatwave, clay, voxel, amethyst. Text/typography prompts land here and render without style LoRAs. |
 | `moss` | MOSS-Image SFT int8 (rapid-moss 4-step adapter) | image | 10: gouache, psychedelic pop, impressionism, 3D animated, seinen anime, flat anime lineart, Kodachrome, grainscape, 1950s western / sci-fi |
 | `ltx23` | LTX-2.3 22B distilled fp8, two-stage x2 upscale | video + audio | 7: transitions, human motion, fast-paced, surfaces realism, pixel art, googly eyes, audio-reactive |
@@ -151,10 +174,27 @@ Routing: 1-5 ms per prompt on CPU. Generation times are in `demo/results.md` (wr
 
 ## Demo
 
-`demo/army-of-loras-demo.mp4` is a 2-minute walkthrough built entirely from this repo's outputs. The
+`demo/army-of-loras-demo.mp4` is a walkthrough (under 2 minutes) built entirely from this repo's outputs. The
 images and videos come from `demo/prompts.txt` run through `army_auto.json`, and the routing reports are
 the real ones. The voiceover is generated with Kokoro-82M (Apache-2.0, via `kokoro-onnx`) and the video
 is assembled with ffmpeg by `demo/make_video.py`.
+
+## In production
+
+This repo is the ComfyUI version of the routing we run in our own inference server, omniserve-native
+(`olora_route.c`). There, every image request is embedded with the C port of pybed (cbed, ~1 µs per
+embed) and scored against route descriptions to pick LoRAs, prompt prefixes/suffixes and negatives
+before the diffusion model runs. That powers image generation on:
+
+- **[netwrck.com](https://netwrck.com)**: AI characters and chat with generated images
+- **[ebank.nz](https://ebank.nz)**: art generator
+- **[manifoldgen.com](https://manifoldgen.com)**: image and video generation
+- **[openpaths.io](https://openpaths.io)**
+
+What carried over from production: the max-cos positive / weighted-avoid score, keywords as a bonus
+rather than a verdict, `exclude` lists that keep style LoRAs off lettering prompts (they wreck text), and
+one LoRA per role (stacking two style LoRAs scored worse than one in our evals). New in this repo:
+the same scoring decides image vs video and which base model to use, across five model families.
 
 ## Tools and models combined
 
@@ -163,7 +203,7 @@ is assembled with ffmpeg by `demo/make_video.py`.
 - **FLUX.2 [klein] 9B** (Black Forest Labs, FLUX non-commercial licence), **Qwen-Image 2.1** (Qwen Research
   licence, non-commercial), **MOSS-Image** (Apache-2.0), **LTX-2.3** (LTX-2 Community License),
   **MiniMax H3** (MiniMax H3 Community License).
-- Speed-ups: FLUX.2 klein 9B distill LoRA, Viggle Qwen-Image 2.1 turbo LoRA, rapid-moss 4-step adapter
+- Speed-ups: Viggle Qwen-Image 2.1 turbo LoRA, rapid-moss 4-step adapter
   (darask0, Apache-2.0), lightx2v H3 4-step turbo LoRA.
 - 65 community LoRAs: see [docs/CREDITS.md](docs/CREDITS.md) for every author, repo, licence and trigger.
 - Kokoro-82M TTS (Apache-2.0) for the demo voiceover; ffmpeg for assembly.

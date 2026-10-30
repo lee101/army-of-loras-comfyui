@@ -1,0 +1,107 @@
+{
+ "prompt": "dvr_wf_style, technical blueprint wireframe of a vintage steam locomotive",
+ "original_prompt": "technical blueprint wireframe of a vintage steam locomotive",
+ "negative": "",
+ "family": "flux2_klein9b",
+ "family_label": "FLUX.2 [klein] 9B (4-step distilled)",
+ "mode": "image",
+ "loras": [
+  {
+   "id": "dever_blueprint",
+   "name": "Blueprint Wireframe (DeverStyle)",
+   "repo": "DeverStyle/Flux.2-Klein-Loras",
+   "file": "dever_blueprint_wireframe_f2k_9b (dvr_wf_style).safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "score": 0.92,
+   "matched": "technical blueprint wireframe drawing",
+   "keyword": "blueprint",
+   "trigger": "dvr_wf_style"
+  }
+ ],
+ "considered": [
+  {
+   "id": "dever_blueprint",
+   "name": "Blueprint Wireframe (DeverStyle)",
+   "score": 0.9199709966778755,
+   "matched": "technical blueprint wireframe drawing",
+   "keyword": "blueprint",
+   "eligible": true
+  },
+  {
+   "id": "redmond_tshirt",
+   "name": "T-shirt Design (Redmond)",
+   "score": 0.21252107620239258,
+   "matched": "vintage tee shirt design illustration",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_clay",
+   "name": "Clay Animation (Redmond)",
+   "score": 0.20572129171341658,
+   "matched": "clay animation set with fingerprints",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_analog",
+   "name": "Analog Film (Redmond)",
+   "score": 0.14725014567375183,
+   "matched": "vintage film camera snapshot with warm tones",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "dever_teal_dark",
+   "name": "Teal Dark Aesthetic (DeverStyle)",
+   "score": 0.14148426055908203,
+   "matched": "moody dark teal colour graded illustration",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_filmstill",
+   "name": "Cinematic Film Still (Redmond)",
+   "score": 0.1236765431240201,
+   "matched": "widescreen film scene with color grading",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_pixelart",
+   "name": "Pixel Art (Redmond)",
+   "score": 0.10540217719972134,
+   "matched": "16-bit video game screenshot with pixels",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_logo",
+   "name": "Logo (Redmond)",
+   "score": 0.09822348691523075,
+   "matched": "minimal vector logo design",
+   "keyword": null,
+   "eligible": false
+  }
+ ],
+ "family_scores": {
+  "flux2_klein9b": 0.540020179450512,
+  "qwen_image21": 0.04336930066347122,
+  "moss": 0.10470904409885406
+ },
+ "mode_scores": {
+  "video": 0.09464562684297562,
+  "image": 0.09133665263652802
+ },
+ "settings": {
+  "steps": 4,
+  "cfg": 1.0,
+  "sampler": "euler",
+  "scheduler": "simple",
+  "width": 1024,
+  "height": 1024
+ },
+ "elapsed_ms": 6.847879849374294
+}

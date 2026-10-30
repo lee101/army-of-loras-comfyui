@@ -17,9 +17,8 @@ get() {  # get <subdir> <url> [outname]
   curl -fL --retry 5 -C - ${HF_TOKEN:+-H "Authorization: Bearer $HF_TOKEN"} -o "$M/$1/$out" "$2"
 }
 for f in $FAMS; do case $f in
-  flux)  # FLUX.2 [klein] 9B base fp8 + 4-step distill LoRA (or use the gated distilled fp8 directly)
+  flux)  # FLUX.2 [klein] 9B base fp8 (20 steps, CFG 3.5)
     get diffusion_models $HF/black-forest-labs/FLUX.2-klein-base-9b-fp8/resolve/main/flux-2-klein-base-9b-fp8.safetensors
-    get loras $HF/dontlikeglowies/flux2-klein-base-9b-distill-lora-fp8/resolve/main/flux-2-klein-9b_extracted_lora_rank_256-fp8e5m2.safetensors
     get text_encoders $HF/Comfy-Org/flux2-klein-9B/resolve/main/split_files/text_encoders/qwen_3_8b.safetensors
     get vae $HF/Comfy-Org/MOSS-Image/resolve/main/vae/flux2-vae.safetensors ;;
   qwen)  # Qwen-Image 2.1 + Viggle 6-step turbo LoRA

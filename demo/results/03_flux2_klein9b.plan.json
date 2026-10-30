@@ -1,0 +1,107 @@
+{
+ "prompt": "Clay animation, Clay., claymation snail astronaut planting a flag on a mushroom planet",
+ "original_prompt": "claymation snail astronaut planting a flag on a mushroom planet",
+ "negative": "",
+ "family": "flux2_klein9b",
+ "family_label": "FLUX.2 [klein] 9B (4-step distilled)",
+ "mode": "image",
+ "loras": [
+  {
+   "id": "redmond_clay",
+   "name": "Clay Animation (Redmond)",
+   "repo": "artificialguybr/ClayAnimation-Redmond-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]ClayAnimation_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.853,
+   "score": 0.5582,
+   "matched": "plasticine clay character",
+   "keyword": "clay*",
+   "trigger": "Clay animation, Clay."
+  }
+ ],
+ "considered": [
+  {
+   "id": "redmond_clay",
+   "name": "Clay Animation (Redmond)",
+   "score": 0.558199405670166,
+   "matched": "plasticine clay character",
+   "keyword": "clay*",
+   "eligible": true
+  },
+  {
+   "id": "redmond_mockup",
+   "name": "Mockups (Redmond)",
+   "score": 0.13622929155826569,
+   "matched": "product packaging mockup",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "dever_orange_splatter",
+   "name": "Orange Splatter Illustration (DeverStyle)",
+   "score": 0.12343832850456238,
+   "matched": "graphic poster illustration with orange paint splashes",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_cutefruits",
+   "name": "Cute Fruits (Redmond)",
+   "score": 0.11568448692560196,
+   "matched": "cute smiling fruit characters",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_filmgrain",
+   "name": "Film Grain (Redmond)",
+   "score": 0.1044856458902359,
+   "matched": "high iso noisy film texture",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_sticker",
+   "name": "Stickers (Redmond)",
+   "score": 0.10227041132748127,
+   "matched": "cute sticker design of an animal",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_doodle",
+   "name": "Doodle (Redmond)",
+   "score": 0.10180331766605377,
+   "matched": "playful marker doodle illustration",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_3drender",
+   "name": "3D Render (Redmond)",
+   "score": 0.09599596075713634,
+   "matched": "3d cartoon mascot render",
+   "keyword": null,
+   "eligible": false
+  }
+ ],
+ "family_scores": {
+  "flux2_klein9b": 0.3496415358781815,
+  "qwen_image21": 0.028929954394698143,
+  "moss": 0.05410455912351608
+ },
+ "mode_scores": {
+  "video": 0.12779313325881958,
+  "image": 0.11225175112485886
+ },
+ "settings": {
+  "steps": 4,
+  "cfg": 1.0,
+  "sampler": "euler",
+  "scheduler": "simple",
+  "width": 1024,
+  "height": 1024
+ },
+ "elapsed_ms": 7.342088967561722
+}

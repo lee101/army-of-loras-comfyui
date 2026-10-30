@@ -1,0 +1,107 @@
+{
+ "prompt": "Amigurumi, Crochet., a crochet amigurumi octopus reading a newspaper on a wooden table",
+ "original_prompt": "a crochet amigurumi octopus reading a newspaper on a wooden table",
+ "negative": "",
+ "family": "flux2_klein9b",
+ "family_label": "FLUX.2 [klein] 9B (4-step distilled)",
+ "mode": "image",
+ "loras": [
+  {
+   "id": "redmond_amigurumi",
+   "name": "Crochet Amigurumi (Redmond)",
+   "repo": "artificialguybr/CROCHET-AMIGURUMI-REDMOND-FLUXKLEIN",
+   "file": "[FLUX.2.Klein]CrochetAmigurumi_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "score": 0.8528,
+   "matched": "crochet amigurumi toy animal",
+   "keyword": "amigurumi",
+   "trigger": "Amigurumi, Crochet."
+  }
+ ],
+ "considered": [
+  {
+   "id": "redmond_amigurumi",
+   "name": "Crochet Amigurumi (Redmond)",
+   "score": 0.8528056740760803,
+   "matched": "crochet amigurumi toy animal",
+   "keyword": "amigurumi",
+   "eligible": true
+  },
+  {
+   "id": "redmond_fisheye",
+   "name": "Fish Eye (Redmond)",
+   "score": 0.1511574685573578,
+   "matched": "fisheye lens wide angle shot",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_doodle",
+   "name": "Doodle (Redmond)",
+   "score": 0.1251695603132248,
+   "matched": "hand drawn doodle sketch in a notebook",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_kidsbook",
+   "name": "Kids Book (Redmond)",
+   "score": 0.1248406283557415,
+   "matched": "children's storybook illustration",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_bookcover",
+   "name": "Book Cover (Redmond)",
+   "score": 0.10169519484043121,
+   "matched": "novel book cover design",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_lineart",
+   "name": "Lineart Anime (Redmond)",
+   "score": 0.09519573766738176,
+   "matched": "clean ink lineart drawing",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_coloringbook",
+   "name": "Coloring Book (Redmond)",
+   "score": 0.08230687491595745,
+   "matched": "black and white coloring book page with clean outlines",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_sticker",
+   "name": "Stickers (Redmond)",
+   "score": 0.07877076417207718,
+   "matched": "die-cut vinyl sticker with white border",
+   "keyword": null,
+   "eligible": false
+  }
+ ],
+ "family_scores": {
+  "flux2_klein9b": 0.771918837428093,
+  "qwen_image21": 0.052791886031627655,
+  "moss": 0.026626944541931152
+ },
+ "mode_scores": {
+  "video": -0.008464579470455647,
+  "image": 0.06498482823371887
+ },
+ "settings": {
+  "steps": 4,
+  "cfg": 1.0,
+  "sampler": "euler",
+  "scheduler": "simple",
+  "width": 1024,
+  "height": 1024
+ },
+ "elapsed_ms": 42.66417189501226
+}

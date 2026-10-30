@@ -1,0 +1,107 @@
+{
+ "prompt": "isometric diorama of a cozy wizard library with floating books",
+ "original_prompt": "isometric diorama of a cozy wizard library with floating books",
+ "negative": "",
+ "family": "flux2_klein9b",
+ "family_label": "FLUX.2 [klein] 9B (4-step distilled)",
+ "mode": "image",
+ "loras": [
+  {
+   "id": "redmond_isometric",
+   "name": "Isometric (Redmond)",
+   "repo": "artificialguybr/ISOMETRIC-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]Isometric_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "score": 0.8607,
+   "matched": "isometric diorama of a tiny room",
+   "keyword": "isometric",
+   "trigger": "ISOMETRIC"
+  }
+ ],
+ "considered": [
+  {
+   "id": "redmond_isometric",
+   "name": "Isometric (Redmond)",
+   "score": 0.8607456693425775,
+   "matched": "isometric diorama of a tiny room",
+   "keyword": "isometric",
+   "eligible": true
+  },
+  {
+   "id": "redmond_filmgrain",
+   "name": "Film Grain (Redmond)",
+   "score": 0.18349739909172058,
+   "matched": "high iso noisy film texture",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_bookcover",
+   "name": "Book Cover (Redmond)",
+   "score": 0.16719979047775269,
+   "matched": "novel book cover design",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_kidsbook",
+   "name": "Kids Book (Redmond)",
+   "score": 0.15255958959460258,
+   "matched": "children's storybook illustration",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_digitalasset",
+   "name": "Digital Asset (Redmond)",
+   "score": 0.1464805006980896,
+   "matched": "fantasy potion inventory icon",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_anime",
+   "name": "Anime (Redmond)",
+   "score": 0.12765155360102654,
+   "matched": "anime illustration of a character",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_coloringbook",
+   "name": "Coloring Book (Redmond)",
+   "score": 0.11362868174910545,
+   "matched": "black and white coloring book page with clean outlines",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_doodle",
+   "name": "Doodle (Redmond)",
+   "score": 0.0820986432954669,
+   "matched": "hand drawn doodle sketch in a notebook",
+   "keyword": null,
+   "eligible": false
+  }
+ ],
+ "family_scores": {
+  "flux2_klein9b": 0.7967197345383465,
+  "qwen_image21": 0.039100732654333115,
+  "moss": 0.05416909232735634
+ },
+ "mode_scores": {
+  "video": 0.026326632127165794,
+  "image": 0.3108968108892441
+ },
+ "settings": {
+  "steps": 4,
+  "cfg": 1.0,
+  "sampler": "euler",
+  "scheduler": "simple",
+  "width": 1024,
+  "height": 1024
+ },
+ "elapsed_ms": 13.241714099422097
+}

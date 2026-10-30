@@ -6,9 +6,9 @@ Every LoRA the router can draft, fetched from its author's Hugging Face repo on 
 All are text-to-image/video LoRAs, picked by hand from `catalogs/raw/` (see `tools/scrape_hf_loras.py`):
 open or base-model community licences only, no adult, likeness or franchise LoRAs.
 
-## FLUX.2 [klein] 9B (4-step distilled)
+## FLUX.2 [klein] 9B base (20 steps)
 
-Base model: [black-forest-labs/FLUX.2-klein-9b-fp8](https://huggingface.co/black-forest-labs/FLUX.2-klein-9b-fp8) (FLUX Non-Commercial License)
+Base model: [black-forest-labs/FLUX.2-klein-base-9b-fp8](https://huggingface.co/black-forest-labs/FLUX.2-klein-base-9b-fp8) (FLUX Non-Commercial License)
 
 | LoRA | group | licence | trigger | repo |
 |---|---|---|---|---|

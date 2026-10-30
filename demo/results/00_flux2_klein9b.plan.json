@@ -1,0 +1,120 @@
+{
+ "prompt": "Sticker, Stickers, Pixel Art, PixArFK, a cute sticker of a red panda eating ramen, pixel art",
+ "original_prompt": "a cute sticker of a red panda eating ramen, pixel art",
+ "negative": "",
+ "family": "flux2_klein9b",
+ "family_label": "FLUX.2 [klein] 9B (4-step distilled)",
+ "mode": "image",
+ "loras": [
+  {
+   "id": "redmond_sticker",
+   "name": "Stickers (Redmond)",
+   "repo": "artificialguybr/STICKERS-REDMOND-FLUX-KLEIN-9B",
+   "file": "[FLUX.2.Klein]Stickers_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "format",
+   "strength": 0.9,
+   "score": 0.7942,
+   "matched": "cute sticker design of an animal",
+   "keyword": "sticker*",
+   "trigger": "Sticker, Stickers"
+  },
+  {
+   "id": "redmond_pixelart",
+   "name": "Pixel Art (Redmond)",
+   "repo": "artificialguybr/PIXELART-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]PixelArt_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.8,
+   "score": 0.6393,
+   "matched": "pixel art game sprite",
+   "keyword": "pixel art",
+   "trigger": "Pixel Art, PixArFK"
+  }
+ ],
+ "considered": [
+  {
+   "id": "redmond_sticker",
+   "name": "Stickers (Redmond)",
+   "score": 0.7941872030496597,
+   "matched": "cute sticker design of an animal",
+   "keyword": "sticker*",
+   "eligible": true
+  },
+  {
+   "id": "redmond_pixelart",
+   "name": "Pixel Art (Redmond)",
+   "score": 0.6392771676182747,
+   "matched": "pixel art game sprite",
+   "keyword": "pixel art",
+   "eligible": true
+  },
+  {
+   "id": "redmond_cutecartoon",
+   "name": "Cute Cartoon (Redmond)",
+   "score": 0.5446122605353594,
+   "matched": "cute chibi cartoon animal",
+   "keyword": "cute",
+   "eligible": true
+  },
+  {
+   "id": "redmond_cutefruits",
+   "name": "Cute Fruits (Redmond)",
+   "score": 0.2759018540382385,
+   "matched": "cute smiling fruit characters",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_3drender",
+   "name": "3D Render (Redmond)",
+   "score": 0.2413560450077057,
+   "matched": "glossy 3d render of a cute character",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "dever_orange_splatter",
+   "name": "Orange Splatter Illustration (DeverStyle)",
+   "score": 0.22542011737823486,
+   "matched": "graphic poster illustration with orange paint splashes",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_kidsbook",
+   "name": "Kids Book (Redmond)",
+   "score": 0.22283827140927315,
+   "matched": "whimsical picture book page with cute animals",
+   "keyword": null,
+   "eligible": false
+  },
+  {
+   "id": "redmond_emoji",
+   "name": "Fluent Emoji (Redmond)",
+   "score": 0.15173321589827538,
+   "matched": "glossy 3d emoji icon",
+   "keyword": null,
+   "eligible": false
+  }
+ ],
+ "family_scores": {
+  "flux2_klein9b": 0.770902047380805,
+  "qwen_image21": 0.03327128663659096,
+  "moss": 0.08953632414340973
+ },
+ "mode_scores": {
+  "video": 0.1127300038933754,
+  "image": 0.3711861789226532
+ },
+ "settings": {
+  "steps": 4,
+  "cfg": 1.0,
+  "sampler": "euler",
+  "scheduler": "simple",
+  "width": 1024,
+  "height": 1024
+ },
+ "elapsed_ms": 2.9686149209737778
+}
