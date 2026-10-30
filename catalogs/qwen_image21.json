@@ -1,0 +1,235 @@
+{
+ "family": "qwen_image21",
+ "label": "Qwen-Image 2.1 (6-step turbo)",
+ "mode": "image",
+ "base": "Qwen/Qwen-Image-2.1",
+ "base_license": "Qwen Research License",
+ "describes": [
+  "posters and signs with readable text and typography",
+  "photoreal scenes with complex composition",
+  "infographics, menus and labels with lettering",
+  "film photography looks",
+  "neon synthwave scenes"
+ ],
+ "keywords": [
+  "text",
+  "lettering",
+  "typography",
+  "poster",
+  "sign",
+  "menu",
+  "headline",
+  "caption",
+  "words",
+  "title",
+  "\""
+ ],
+ "prior": 0.0,
+ "avoid_weight": 0.5,
+ "max_total_strength": 1.5,
+ "min_score": 0.4,
+ "negative": "blurry, low quality, watermark",
+ "settings": {
+  "steps": 6,
+  "cfg": 1.0,
+  "sampler": "euler",
+  "scheduler": "simple",
+  "width": 1024,
+  "height": 1024,
+  "shift": 3.1
+ },
+ "loras": [
+  {
+   "id": "qwen_filmstills",
+   "name": "Film Stills (Danrisi)",
+   "repo": "Danrisi/filmstills_qwen2.1",
+   "file": "filmstills_qwen21.safetensors",
+   "license": "qwen-research (non-commercial)",
+   "group": "look",
+   "strength": 0.7,
+   "trigger": "",
+   "keywords": [
+    "film still",
+    "movie still",
+    "90s movie",
+    "cinematic"
+   ],
+   "exclude": [],
+   "positive": [
+    "35mm film still from a 90s movie",
+    "cinematic film still with colour grading and haze"
+   ],
+   "avoid": [
+    "flat vector logo",
+    "cartoon"
+   ]
+  },
+  {
+   "id": "qwen_grainscape",
+   "name": "Grainscape (Danrisi)",
+   "repo": "Danrisi/grainscape_qwen2.1",
+   "file": "grainscape_qwen21.safetensors",
+   "license": "qwen-research (non-commercial)",
+   "group": "look",
+   "strength": 0.7,
+   "trigger": "",
+   "keywords": [
+    "film grain",
+    "grainy",
+    "35mm",
+    "analog",
+    "night photo"
+   ],
+   "exclude": [],
+   "positive": [
+    "color film photography with heavy grain",
+    "underexposed night snapshot on 35mm negative film"
+   ],
+   "avoid": [
+    "clean vector illustration"
+   ]
+  },
+  {
+   "id": "qwen_y2k",
+   "name": "Y2K Digicam (empero-ai)",
+   "repo": "empero-ai/Homebrew-Qwen-Image-2.1-Y2K",
+   "file": "pytorch_lora_weights.safetensors",
+   "license": "qwen-research (non-commercial)",
+   "group": "look",
+   "strength": 0.9,
+   "trigger": "y2kphoto",
+   "keywords": [
+    "y2k",
+    "digicam",
+    "2000s",
+    "flash photo"
+   ],
+   "exclude": [],
+   "positive": [
+    "early 2000s digicam snapshot with direct flash",
+    "y2k point and shoot camera photo"
+   ],
+   "avoid": [
+    "oil painting",
+    "vector"
+   ]
+  },
+  {
+   "id": "qwen_outrun",
+   "name": "Outrun Synthwave (prithivMLmods)",
+   "repo": "prithivMLmods/Qwen-Image-2.1-Outrun",
+   "file": "Qwen-Image-2.1-Outrun-3000.safetensors",
+   "license": "qwen-research (non-commercial)",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "",
+   "keywords": [
+    "synthwave",
+    "outrun",
+    "retrowave",
+    "vaporwave",
+    "neon"
+   ],
+   "exclude": [],
+   "positive": [
+    "synthwave outrun neon sunset with grid",
+    "retro 80s neon magenta and cyan city"
+   ],
+   "avoid": [
+    "daylight pastoral"
+   ]
+  },
+  {
+   "id": "qwen_heatwave",
+   "name": "Heatwave (prithivMLmods)",
+   "repo": "prithivMLmods/Qwen-Image-2.1-Heatwave",
+   "file": "Qwen-Image-2.1-Heatwave-3000.safetensors",
+   "license": "qwen-research (non-commercial)",
+   "group": "style",
+   "strength": 0.8,
+   "trigger": "",
+   "keywords": [
+    "heatwave",
+    "scorching",
+    "desert heat"
+   ],
+   "exclude": [],
+   "positive": [
+    "scorching heatwave with intense orange warm tones",
+    "fiery desert heat haze"
+   ],
+   "avoid": [
+    "cold snow scene"
+   ]
+  },
+  {
+   "id": "qwen_clay",
+   "name": "Clay Sculpture (prithivMLmods)",
+   "repo": "prithivMLmods/Qwen-Image-2.1-Clay-Sculpture-Style",
+   "file": "Qwen-Image-2.1-Clay-Sculpture-Style-3000.safetensors",
+   "license": "qwen-research (non-commercial)",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "",
+   "keywords": [
+    "clay",
+    "sculpture",
+    "figurine",
+    "plasticine"
+   ],
+   "exclude": [],
+   "positive": [
+    "clay sculpture of a character",
+    "smooth sculpted clay figurine"
+   ],
+   "avoid": [
+    "photograph of a real person"
+   ]
+  },
+  {
+   "id": "qwen_voxel",
+   "name": "Voxel (prithivMLmods)",
+   "repo": "prithivMLmods/Qwen-Image-2.1-Voxel-Style",
+   "file": "Qwen-Image-2.1-Voxel-Style-3000.safetensors",
+   "license": "qwen-research (non-commercial)",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "",
+   "keywords": [
+    "voxel*",
+    "blocky",
+    "cubes"
+   ],
+   "exclude": [],
+   "positive": [
+    "voxel art made of cubes",
+    "blocky voxel diorama"
+   ],
+   "avoid": [
+    "smooth realistic"
+   ]
+  },
+  {
+   "id": "qwen_amethyst",
+   "name": "Amethyst Theme (prithivMLmods)",
+   "repo": "prithivMLmods/Qwen-Image-2.1-Amethyst-Theme",
+   "file": "Qwen-Image-2.1-Amethyst-Theme-3000.safetensors",
+   "license": "qwen-research (non-commercial)",
+   "group": "style",
+   "strength": 0.8,
+   "trigger": "",
+   "keywords": [
+    "amethyst",
+    "purple",
+    "violet",
+    "crystal*"
+   ],
+   "exclude": [],
+   "positive": [
+    "purple amethyst crystal colour theme",
+    "violet gemstone glow aesthetic"
+   ],
+   "avoid": []
+  }
+ ]
+}

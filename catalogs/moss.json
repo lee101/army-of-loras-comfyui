@@ -1,0 +1,305 @@
+{
+ "family": "moss",
+ "label": "MOSS-Image SFT (rapid 4-step)",
+ "mode": "image",
+ "base": "OpenMOSS-Team/MOSS-Image-SFT",
+ "base_license": "apache-2.0",
+ "describes": [
+  "painterly fine art: gouache, impressionist oil, watercolour",
+  "vintage film photography like kodachrome",
+  "psychedelic poster art",
+  "anime and animated movie characters",
+  "1950s retro movie scenes"
+ ],
+ "keywords": [
+  "painting",
+  "painterly",
+  "gouache",
+  "impressionis*",
+  "oil painting",
+  "kodachrome",
+  "psychedelic",
+  "1950s"
+ ],
+ "prior": 0.0,
+ "avoid_weight": 0.5,
+ "max_total_strength": 1.6,
+ "min_score": 0.4,
+ "settings": {
+  "steps": 4,
+  "cfg": 1.0,
+  "sampler": "euler",
+  "scheduler": "simple",
+  "width": 1024,
+  "height": 1024
+ },
+ "loras": [
+  {
+   "id": "moss_gouache",
+   "name": "Vintage Gouache (axiomofmind)",
+   "repo": "axiomofmind/Moss-image-gouache-lora",
+   "file": "MOSS-Image-Gouache-LoRA-ComfyUI.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "moss_vgouache_style",
+   "keywords": [
+    "gouache",
+    "vintage illustration",
+    "storybook",
+    "mid-century"
+   ],
+   "exclude": [
+    "text",
+    "lettering",
+    "typograph*",
+    "font",
+    "words",
+    "written",
+    "says",
+    "sign",
+    "signage",
+    "label*",
+    "infographic",
+    "diagram",
+    "screenshot",
+    "ui"
+   ],
+   "positive": [
+    "gouache painting with flat painterly shapes",
+    "vintage mid-century storybook illustration",
+    "retro editorial illustration, warm limited palette"
+   ],
+   "avoid": [
+    "photograph",
+    "3d render"
+   ]
+  },
+  {
+   "id": "moss_psychpop",
+   "name": "Psychedelic Pop (axiomofmind)",
+   "repo": "axiomofmind/Moss-image-psychedelic-lora",
+   "file": "MOSS-Image-Psychedelic-LoRA-ComfyUI.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "moss_psychpop_style",
+   "keywords": [
+    "psychedelic",
+    "trippy",
+    "kaleidoscop*",
+    "blacklight",
+    "fractal"
+   ],
+   "exclude": [],
+   "positive": [
+    "psychedelic trippy swirling fractal colours",
+    "acid blacklight poster art",
+    "kaleidoscopic neon pattern"
+   ],
+   "avoid": [
+    "realistic photograph",
+    "plain minimal"
+   ],
+   "suffix": ", saturated neon colour, bold graphic linework"
+  },
+  {
+   "id": "moss_impressionism",
+   "name": "Impressionism (Kandoo)",
+   "repo": "Kandoo/MOSS-Image-Impressionism-LoRA",
+   "file": "moss-image-impressionism-lora.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 1.1,
+   "trigger": "",
+   "keywords": [
+    "impressionis*",
+    "monet",
+    "plein air",
+    "oil painting",
+    "brushstroke*"
+   ],
+   "exclude": [],
+   "positive": [
+    "impressionist oil painting with soft brushstrokes",
+    "garden in dappled light, broken brushwork",
+    "hazy plein air landscape painting"
+   ],
+   "avoid": [
+    "photograph",
+    "sharp digital render"
+   ]
+  },
+  {
+   "id": "moss_animated",
+   "name": "3D Animated (axiomofmind)",
+   "repo": "axiomofmind/Moss-image-animated-lora",
+   "file": "MOSS-Image-Animated-LoRA-ComfyUI.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.7,
+   "trigger": "moss_ac_style",
+   "keywords": [
+    "3d animated",
+    "3d cartoon",
+    "animated movie",
+    "animated film"
+   ],
+   "exclude": [],
+   "positive": [
+    "3d animated movie character",
+    "cute 3d cartoon from a computer animated family film",
+    "stylised 3d animated scene"
+   ],
+   "avoid": [
+    "photograph of a real person",
+    "flat 2d drawing"
+   ]
+  },
+  {
+   "id": "moss_seinen",
+   "name": "Seinen Anime (axiomofmind)",
+   "repo": "axiomofmind/Moss-image-anime-lora",
+   "file": "MOSS-Image-Anime-LoRA-ComfyUI.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "trigger": "",
+   "keywords": [
+    "anime",
+    "manga"
+   ],
+   "exclude": [],
+   "positive": [
+    "anime character in a dramatic action scene",
+    "cinematic anime illustration with strong silhouettes"
+   ],
+   "avoid": [
+    "photograph",
+    "3d render"
+   ]
+  },
+  {
+   "id": "moss_flatanime",
+   "name": "Flat Colour Anime Lineart (Helives)",
+   "repo": "Helives/Flat-Color-Anime-Lineart-Style-for-MOSS",
+   "file": "Flat Color Anime Lineart Style-dora_1600.safetensors",
+   "license": "mit",
+   "group": "style",
+   "strength": 0.9,
+   "trigger": "",
+   "keywords": [
+    "flat colour",
+    "flat color",
+    "lineart",
+    "cel"
+   ],
+   "exclude": [],
+   "positive": [
+    "flat colour anime illustration with clean lineart",
+    "soft low saturation anime drawing"
+   ],
+   "avoid": [
+    "photograph",
+    "painterly oil"
+   ]
+  },
+  {
+   "id": "moss_kodachrome",
+   "name": "Kodachrome Film (aoleg)",
+   "repo": "aoleg/MOSS-Image-Kodachrome-V2",
+   "file": "lokr-moss-kodachrome-v2.safetensors",
+   "license": "apache-2.0",
+   "group": "look",
+   "strength": 1.0,
+   "trigger": "shot on Kodachrome film",
+   "keywords": [
+    "kodachrome",
+    "slide film",
+    "1940s",
+    "vintage photo"
+   ],
+   "exclude": [],
+   "positive": [
+    "vintage kodachrome slide film photograph",
+    "1940s colour film photo with rich reds"
+   ],
+   "avoid": [
+    "anime",
+    "vector"
+   ]
+  },
+  {
+   "id": "moss_grainscape",
+   "name": "Grainscape (Danrisi)",
+   "repo": "Danrisi/grainscape_moss",
+   "file": "grainscape_moss.safetensors",
+   "license": "apache-2.0",
+   "group": "look",
+   "strength": 0.7,
+   "trigger": "",
+   "keywords": [
+    "grainy",
+    "film grain",
+    "analog"
+   ],
+   "exclude": [],
+   "positive": [
+    "film still with heavy analog noise",
+    "gritty desaturated grainy photograph"
+   ],
+   "avoid": [
+    "clean illustration"
+   ]
+  },
+  {
+   "id": "moss_1950s_western",
+   "name": "1950s Western (neph1)",
+   "repo": "neph1/1950s_western_lora_moss",
+   "file": "1950s_western_moss_200.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "trigger": "",
+   "keywords": [
+    "western",
+    "cowboy*",
+    "frontier",
+    "saloon"
+   ],
+   "exclude": [],
+   "positive": [
+    "1950s technicolor western movie scene",
+    "cowboy on horseback in a dusty frontier town"
+   ],
+   "avoid": [
+    "futuristic"
+   ]
+  },
+  {
+   "id": "moss_1950s_scifi",
+   "name": "1950s Sci-Fi (neph1)",
+   "repo": "neph1/1950s_scifi_lora_moss",
+   "file": "1950s_scifi_moss_200.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "trigger": "",
+   "keywords": [
+    "1950s",
+    "b-movie",
+    "flying saucer",
+    "retro sci-fi",
+    "retro scifi"
+   ],
+   "exclude": [],
+   "positive": [
+    "1950s retro science fiction movie still",
+    "flying saucer over a small town, b-movie"
+   ],
+   "avoid": [
+    "modern photograph"
+   ]
+  }
+ ]
+}

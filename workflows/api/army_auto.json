@@ -1,0 +1,1044 @@
+{
+ "1": {
+  "class_type": "ArmyLoraRouter",
+  "inputs": {
+   "prompt": "a cute sticker of a red panda eating ramen, pixel art",
+   "family": "auto",
+   "max_loras": 3,
+   "strength_scale": 1.0,
+   "min_score_offset": 0.0
+  },
+  "_meta": {
+   "title": "Army of LoRAs: Router (pybed)"
+  }
+ },
+ "2": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "flux-2-klein-base-9b-fp8.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "FLUX.2 klein 9B base fp8"
+  }
+ },
+ "3": {
+  "class_type": "LoraLoaderModelOnly",
+  "inputs": {
+   "model": [
+    "2",
+    0
+   ],
+   "lora_name": "flux-2-klein-9b_extracted_lora_rank_256-fp8e5m2.safetensors",
+   "strength_model": 1.0
+  },
+  "_meta": {
+   "title": "klein 9B distill (4-step)"
+  }
+ },
+ "4": {
+  "class_type": "ArmyLoraApply",
+  "inputs": {
+   "model": [
+    "3",
+    0
+   ],
+   "plan": [
+    "1",
+    0
+   ],
+   "family": "flux2_klein9b"
+  },
+  "_meta": {
+   "title": "Army: apply FLUX LoRAs"
+  }
+ },
+ "5": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "qwen_3_8b.safetensors",
+   "type": "flux2",
+   "device": "default"
+  }
+ },
+ "6": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": [
+    "1",
+    1
+   ],
+   "clip": [
+    "5",
+    0
+   ]
+  }
+ },
+ "7": {
+  "class_type": "ConditioningZeroOut",
+  "inputs": {
+   "conditioning": [
+    "6",
+    0
+   ]
+  }
+ },
+ "8": {
+  "class_type": "CFGGuider",
+  "inputs": {
+   "model": [
+    "4",
+    0
+   ],
+   "positive": [
+    "6",
+    0
+   ],
+   "negative": [
+    "7",
+    0
+   ],
+   "cfg": 1.0
+  }
+ },
+ "9": {
+  "class_type": "Flux2Scheduler",
+  "inputs": {
+   "steps": 4,
+   "width": 1024,
+   "height": 1024
+  }
+ },
+ "10": {
+  "class_type": "EmptyFlux2LatentImage",
+  "inputs": {
+   "width": 1024,
+   "height": 1024,
+   "batch_size": 1
+  }
+ },
+ "11": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "12": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "euler"
+  }
+ },
+ "13": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "11",
+    0
+   ],
+   "guider": [
+    "8",
+    0
+   ],
+   "sampler": [
+    "12",
+    0
+   ],
+   "sigmas": [
+    "9",
+    0
+   ],
+   "latent_image": [
+    "10",
+    0
+   ]
+  }
+ },
+ "14": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "flux2-vae.safetensors"
+  }
+ },
+ "15": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "13",
+    0
+   ],
+   "vae": [
+    "14",
+    0
+   ]
+  }
+ },
+ "16": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "Qwen-Image 2.1"
+  }
+ },
+ "17": {
+  "class_type": "LoraLoaderModelOnly",
+  "inputs": {
+   "model": [
+    "16",
+    0
+   ],
+   "lora_name": "qwen-image-2.1-viggle-turbo-v0.3-6step-lora-r256.safetensors",
+   "strength_model": 1.0
+  },
+  "_meta": {
+   "title": "Qwen 2.1 turbo (6-step)"
+  }
+ },
+ "18": {
+  "class_type": "ArmyLoraApply",
+  "inputs": {
+   "model": [
+    "17",
+    0
+   ],
+   "plan": [
+    "1",
+    0
+   ],
+   "family": "qwen_image21"
+  },
+  "_meta": {
+   "title": "Army: apply Qwen LoRAs"
+  }
+ },
+ "19": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "qwen3vl_8b_w4a8.safetensors",
+   "type": "qwen_image",
+   "device": "default"
+  }
+ },
+ "20": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+  }
+ },
+ "21": {
+  "class_type": "TextEncodeQwenImage21",
+  "inputs": {
+   "clip": [
+    "19",
+    0
+   ],
+   "prompt": [
+    "1",
+    1
+   ],
+   "negative_prompt": [
+    "1",
+    2
+   ],
+   "resolution": 1024
+  }
+ },
+ "22": {
+  "class_type": "CFGGuider",
+  "inputs": {
+   "model": [
+    "18",
+    0
+   ],
+   "positive": [
+    "21",
+    0
+   ],
+   "negative": [
+    "21",
+    1
+   ],
+   "cfg": 1.0
+  }
+ },
+ "23": {
+  "class_type": "BasicScheduler",
+  "inputs": {
+   "model": [
+    "18",
+    0
+   ],
+   "scheduler": "simple",
+   "steps": 6,
+   "denoise": 1.0
+  }
+ },
+ "24": {
+  "class_type": "EmptyLatentImage",
+  "inputs": {
+   "width": 1024,
+   "height": 1024,
+   "batch_size": 1
+  }
+ },
+ "25": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "26": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "euler"
+  }
+ },
+ "27": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "25",
+    0
+   ],
+   "guider": [
+    "22",
+    0
+   ],
+   "sampler": [
+    "26",
+    0
+   ],
+   "sigmas": [
+    "23",
+    0
+   ],
+   "latent_image": [
+    "24",
+    0
+   ]
+  }
+ },
+ "28": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "27",
+    0
+   ],
+   "vae": [
+    "20",
+    0
+   ]
+  }
+ },
+ "29": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "moss_image_sft_int8_convrot.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "MOSS-Image SFT int8"
+  }
+ },
+ "30": {
+  "class_type": "ArmyLoraApply",
+  "inputs": {
+   "model": [
+    "29",
+    0
+   ],
+   "plan": [
+    "1",
+    0
+   ],
+   "family": "moss"
+  },
+  "_meta": {
+   "title": "Army: apply MOSS LoRAs"
+  }
+ },
+ "31": {
+  "class_type": "RapidMOSSAdapter",
+  "inputs": {
+   "model": [
+    "30",
+    0
+   ],
+   "adapter": "rapid-moss-4step",
+   "steps": 4,
+   "lora_strength": 1.0
+  },
+  "_meta": {
+   "title": "rapid-moss 4-step adapter"
+  }
+ },
+ "32": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "qwen3.5_9b_int8_convrot.safetensors",
+   "type": "moss_image",
+   "device": "default"
+  }
+ },
+ "33": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": [
+    "1",
+    1
+   ],
+   "clip": [
+    "32",
+    0
+   ]
+  }
+ },
+ "34": {
+  "class_type": "BasicGuider",
+  "inputs": {
+   "model": [
+    "31",
+    0
+   ],
+   "conditioning": [
+    "33",
+    0
+   ]
+  }
+ },
+ "35": {
+  "class_type": "EmptyFlux2LatentImage",
+  "inputs": {
+   "width": 1024,
+   "height": 1024,
+   "batch_size": 1
+  }
+ },
+ "36": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "37": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "36",
+    0
+   ],
+   "guider": [
+    "34",
+    0
+   ],
+   "sampler": [
+    "31",
+    1
+   ],
+   "sigmas": [
+    "31",
+    2
+   ],
+   "latent_image": [
+    "35",
+    0
+   ]
+  }
+ },
+ "38": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "flux2-vae.safetensors"
+  }
+ },
+ "39": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "37",
+    0
+   ],
+   "vae": [
+    "38",
+    0
+   ]
+  }
+ },
+ "40": {
+  "class_type": "CheckpointLoaderSimple",
+  "inputs": {
+   "ckpt_name": "ltx-2.3-22b-distilled-fp8.safetensors"
+  },
+  "_meta": {
+   "title": "LTX-2.3 22B distilled fp8"
+  }
+ },
+ "41": {
+  "class_type": "ArmyLoraApply",
+  "inputs": {
+   "model": [
+    "40",
+    0
+   ],
+   "plan": [
+    "1",
+    0
+   ],
+   "family": "ltx23"
+  },
+  "_meta": {
+   "title": "Army: apply LTX LoRAs"
+  }
+ },
+ "42": {
+  "class_type": "LTXAVTextEncoderLoader",
+  "inputs": {
+   "text_encoder": "gemma_3_12B_it_fp4_mixed.safetensors",
+   "ckpt_name": "ltx-2.3-22b-distilled-fp8.safetensors",
+   "device": "default"
+  }
+ },
+ "43": {
+  "class_type": "LTXVAudioVAELoader",
+  "inputs": {
+   "ckpt_name": "ltx-2.3-22b-distilled-fp8.safetensors"
+  }
+ },
+ "44": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": [
+    "1",
+    1
+   ],
+   "clip": [
+    "42",
+    0
+   ]
+  }
+ },
+ "45": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": [
+    "1",
+    2
+   ],
+   "clip": [
+    "42",
+    0
+   ]
+  }
+ },
+ "46": {
+  "class_type": "LTXVConditioning",
+  "inputs": {
+   "positive": [
+    "44",
+    0
+   ],
+   "negative": [
+    "45",
+    0
+   ],
+   "frame_rate": 24.0
+  }
+ },
+ "47": {
+  "class_type": "EmptyLTXVLatentVideo",
+  "inputs": {
+   "width": 512,
+   "height": 288,
+   "length": 97,
+   "batch_size": 1
+  }
+ },
+ "48": {
+  "class_type": "LTXVEmptyLatentAudio",
+  "inputs": {
+   "frames_number": 97,
+   "frame_rate": 24,
+   "batch_size": 1,
+   "audio_vae": [
+    "43",
+    0
+   ]
+  }
+ },
+ "49": {
+  "class_type": "LTXVConcatAVLatent",
+  "inputs": {
+   "video_latent": [
+    "47",
+    0
+   ],
+   "audio_latent": [
+    "48",
+    0
+   ]
+  }
+ },
+ "50": {
+  "class_type": "CFGGuider",
+  "inputs": {
+   "model": [
+    "41",
+    0
+   ],
+   "positive": [
+    "46",
+    0
+   ],
+   "negative": [
+    "46",
+    1
+   ],
+   "cfg": 1.0
+  }
+ },
+ "51": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "52": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "euler_ancestral_cfg_pp"
+  }
+ },
+ "53": {
+  "class_type": "ManualSigmas",
+  "inputs": {
+   "sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
+  }
+ },
+ "54": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "51",
+    0
+   ],
+   "guider": [
+    "50",
+    0
+   ],
+   "sampler": [
+    "52",
+    0
+   ],
+   "sigmas": [
+    "53",
+    0
+   ],
+   "latent_image": [
+    "49",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "stage 1 (half res)"
+  }
+ },
+ "55": {
+  "class_type": "LTXVSeparateAVLatent",
+  "inputs": {
+   "av_latent": [
+    "54",
+    0
+   ]
+  }
+ },
+ "56": {
+  "class_type": "LatentUpscaleModelLoader",
+  "inputs": {
+   "model_name": "ltx-2.3-spatial-upscaler-x2-1.1.safetensors"
+  }
+ },
+ "57": {
+  "class_type": "LTXVLatentUpsampler",
+  "inputs": {
+   "samples": [
+    "55",
+    0
+   ],
+   "upscale_model": [
+    "56",
+    0
+   ],
+   "vae": [
+    "40",
+    2
+   ]
+  }
+ },
+ "58": {
+  "class_type": "LTXVCropGuides",
+  "inputs": {
+   "positive": [
+    "46",
+    0
+   ],
+   "negative": [
+    "46",
+    1
+   ],
+   "latent": [
+    "55",
+    0
+   ]
+  }
+ },
+ "59": {
+  "class_type": "LTXVConcatAVLatent",
+  "inputs": {
+   "video_latent": [
+    "57",
+    0
+   ],
+   "audio_latent": [
+    "55",
+    1
+   ]
+  }
+ },
+ "60": {
+  "class_type": "CFGGuider",
+  "inputs": {
+   "model": [
+    "41",
+    0
+   ],
+   "positive": [
+    "58",
+    0
+   ],
+   "negative": [
+    "58",
+    1
+   ],
+   "cfg": 1.0
+  }
+ },
+ "61": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 43
+  }
+ },
+ "62": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "euler_cfg_pp"
+  }
+ },
+ "63": {
+  "class_type": "ManualSigmas",
+  "inputs": {
+   "sigmas": "0.85, 0.7250, 0.4219, 0.0"
+  }
+ },
+ "64": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "61",
+    0
+   ],
+   "guider": [
+    "60",
+    0
+   ],
+   "sampler": [
+    "62",
+    0
+   ],
+   "sigmas": [
+    "63",
+    0
+   ],
+   "latent_image": [
+    "59",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "stage 2 (x2 refine)"
+  }
+ },
+ "65": {
+  "class_type": "LTXVSeparateAVLatent",
+  "inputs": {
+   "av_latent": [
+    "64",
+    0
+   ]
+  }
+ },
+ "66": {
+  "class_type": "VAEDecodeTiled",
+  "inputs": {
+   "samples": [
+    "65",
+    0
+   ],
+   "vae": [
+    "40",
+    2
+   ],
+   "tile_size": 768,
+   "overlap": 64,
+   "temporal_size": 4096,
+   "temporal_overlap": 4
+  }
+ },
+ "67": {
+  "class_type": "LTXVAudioVAEDecode",
+  "inputs": {
+   "samples": [
+    "65",
+    1
+   ],
+   "audio_vae": [
+    "43",
+    0
+   ]
+  }
+ },
+ "68": {
+  "class_type": "CreateVideo",
+  "inputs": {
+   "images": [
+    "66",
+    0
+   ],
+   "audio": [
+    "67",
+    0
+   ],
+   "fps": 24.0
+  }
+ },
+ "69": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "MiniMax H3 int8"
+  }
+ },
+ "70": {
+  "class_type": "LoraLoaderModelOnly",
+  "inputs": {
+   "model": [
+    "69",
+    0
+   ],
+   "lora_name": "minimax_h3_fl2v_turbo_4step_v0.1.safetensors",
+   "strength_model": 1.0
+  },
+  "_meta": {
+   "title": "H3 lightx2v turbo (4-step)"
+  }
+ },
+ "71": {
+  "class_type": "ArmyLoraApply",
+  "inputs": {
+   "model": [
+    "70",
+    0
+   ],
+   "plan": [
+    "1",
+    0
+   ],
+   "family": "h3"
+  },
+  "_meta": {
+   "title": "Army: apply H3 LoRAs"
+  }
+ },
+ "72": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+   "type": "minimax",
+   "device": "default"
+  }
+ },
+ "73": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+  }
+ },
+ "74": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+  }
+ },
+ "75": {
+  "class_type": "MiniMaxH3ImageToVideo",
+  "inputs": {
+   "clip": [
+    "72",
+    0
+   ],
+   "vae": [
+    "73",
+    0
+   ],
+   "prompt": [
+    "1",
+    1
+   ],
+   "width": 832,
+   "height": 480,
+   "length": 73
+  }
+ },
+ "76": {
+  "class_type": "BasicGuider",
+  "inputs": {
+   "model": [
+    "71",
+    0
+   ],
+   "conditioning": [
+    "75",
+    0
+   ]
+  }
+ },
+ "77": {
+  "class_type": "BasicScheduler",
+  "inputs": {
+   "model": [
+    "71",
+    0
+   ],
+   "scheduler": "simple",
+   "steps": 4,
+   "denoise": 1.0
+  }
+ },
+ "78": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "79": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "res_multistep"
+  }
+ },
+ "80": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "78",
+    0
+   ],
+   "guider": [
+    "76",
+    0
+   ],
+   "sampler": [
+    "79",
+    0
+   ],
+   "sigmas": [
+    "77",
+    0
+   ],
+   "latent_image": [
+    "75",
+    1
+   ]
+  }
+ },
+ "81": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "80",
+    0
+   ],
+   "vae": [
+    "73",
+    0
+   ]
+  }
+ },
+ "82": {
+  "class_type": "VAEDecodeAudio",
+  "inputs": {
+   "samples": [
+    "80",
+    0
+   ],
+   "vae": [
+    "74",
+    0
+   ]
+  }
+ },
+ "83": {
+  "class_type": "CreateVideo",
+  "inputs": {
+   "images": [
+    "81",
+    0
+   ],
+   "audio": [
+    "82",
+    0
+   ],
+   "fps": 24.0
+  }
+ },
+ "84": {
+  "class_type": "ArmyAutoOutput",
+  "inputs": {
+   "plan": [
+    "1",
+    0
+   ],
+   "filename_prefix": "army-of-loras",
+   "flux2_klein9b": [
+    "15",
+    0
+   ],
+   "qwen_image21": [
+    "28",
+    0
+   ],
+   "moss": [
+    "39",
+    0
+   ],
+   "ltx23": [
+    "68",
+    0
+   ],
+   "h3": [
+    "83",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Army of LoRAs: Auto Output"
+  }
+ }
+}

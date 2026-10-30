@@ -1,0 +1,389 @@
+{
+ "1": {
+  "class_type": "ArmyLoraRouter",
+  "inputs": {
+   "prompt": "a paper boat transforms into a glowing koi fish as it drifts down a rainy street, cinematic",
+   "family": "ltx23",
+   "max_loras": 3,
+   "strength_scale": 1.0,
+   "min_score_offset": 0.0
+  },
+  "_meta": {
+   "title": "Army of LoRAs: Router (pybed)"
+  }
+ },
+ "2": {
+  "class_type": "CheckpointLoaderSimple",
+  "inputs": {
+   "ckpt_name": "ltx-2.3-22b-distilled-fp8.safetensors"
+  },
+  "_meta": {
+   "title": "LTX-2.3 22B distilled fp8"
+  }
+ },
+ "3": {
+  "class_type": "ArmyLoraApply",
+  "inputs": {
+   "model": [
+    "2",
+    0
+   ],
+   "plan": [
+    "1",
+    0
+   ],
+   "family": "ltx23"
+  },
+  "_meta": {
+   "title": "Army: apply LTX LoRAs"
+  }
+ },
+ "4": {
+  "class_type": "LTXAVTextEncoderLoader",
+  "inputs": {
+   "text_encoder": "gemma_3_12B_it_fp4_mixed.safetensors",
+   "ckpt_name": "ltx-2.3-22b-distilled-fp8.safetensors",
+   "device": "default"
+  }
+ },
+ "5": {
+  "class_type": "LTXVAudioVAELoader",
+  "inputs": {
+   "ckpt_name": "ltx-2.3-22b-distilled-fp8.safetensors"
+  }
+ },
+ "6": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": [
+    "1",
+    1
+   ],
+   "clip": [
+    "4",
+    0
+   ]
+  }
+ },
+ "7": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": [
+    "1",
+    2
+   ],
+   "clip": [
+    "4",
+    0
+   ]
+  }
+ },
+ "8": {
+  "class_type": "LTXVConditioning",
+  "inputs": {
+   "positive": [
+    "6",
+    0
+   ],
+   "negative": [
+    "7",
+    0
+   ],
+   "frame_rate": 24.0
+  }
+ },
+ "9": {
+  "class_type": "EmptyLTXVLatentVideo",
+  "inputs": {
+   "width": 512,
+   "height": 288,
+   "length": 97,
+   "batch_size": 1
+  }
+ },
+ "10": {
+  "class_type": "LTXVEmptyLatentAudio",
+  "inputs": {
+   "frames_number": 97,
+   "frame_rate": 24,
+   "batch_size": 1,
+   "audio_vae": [
+    "5",
+    0
+   ]
+  }
+ },
+ "11": {
+  "class_type": "LTXVConcatAVLatent",
+  "inputs": {
+   "video_latent": [
+    "9",
+    0
+   ],
+   "audio_latent": [
+    "10",
+    0
+   ]
+  }
+ },
+ "12": {
+  "class_type": "CFGGuider",
+  "inputs": {
+   "model": [
+    "3",
+    0
+   ],
+   "positive": [
+    "8",
+    0
+   ],
+   "negative": [
+    "8",
+    1
+   ],
+   "cfg": 1.0
+  }
+ },
+ "13": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "14": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "euler_ancestral_cfg_pp"
+  }
+ },
+ "15": {
+  "class_type": "ManualSigmas",
+  "inputs": {
+   "sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
+  }
+ },
+ "16": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "13",
+    0
+   ],
+   "guider": [
+    "12",
+    0
+   ],
+   "sampler": [
+    "14",
+    0
+   ],
+   "sigmas": [
+    "15",
+    0
+   ],
+   "latent_image": [
+    "11",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "stage 1 (half res)"
+  }
+ },
+ "17": {
+  "class_type": "LTXVSeparateAVLatent",
+  "inputs": {
+   "av_latent": [
+    "16",
+    0
+   ]
+  }
+ },
+ "18": {
+  "class_type": "LatentUpscaleModelLoader",
+  "inputs": {
+   "model_name": "ltx-2.3-spatial-upscaler-x2-1.1.safetensors"
+  }
+ },
+ "19": {
+  "class_type": "LTXVLatentUpsampler",
+  "inputs": {
+   "samples": [
+    "17",
+    0
+   ],
+   "upscale_model": [
+    "18",
+    0
+   ],
+   "vae": [
+    "2",
+    2
+   ]
+  }
+ },
+ "20": {
+  "class_type": "LTXVCropGuides",
+  "inputs": {
+   "positive": [
+    "8",
+    0
+   ],
+   "negative": [
+    "8",
+    1
+   ],
+   "latent": [
+    "17",
+    0
+   ]
+  }
+ },
+ "21": {
+  "class_type": "LTXVConcatAVLatent",
+  "inputs": {
+   "video_latent": [
+    "19",
+    0
+   ],
+   "audio_latent": [
+    "17",
+    1
+   ]
+  }
+ },
+ "22": {
+  "class_type": "CFGGuider",
+  "inputs": {
+   "model": [
+    "3",
+    0
+   ],
+   "positive": [
+    "20",
+    0
+   ],
+   "negative": [
+    "20",
+    1
+   ],
+   "cfg": 1.0
+  }
+ },
+ "23": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 43
+  }
+ },
+ "24": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "euler_cfg_pp"
+  }
+ },
+ "25": {
+  "class_type": "ManualSigmas",
+  "inputs": {
+   "sigmas": "0.85, 0.7250, 0.4219, 0.0"
+  }
+ },
+ "26": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "23",
+    0
+   ],
+   "guider": [
+    "22",
+    0
+   ],
+   "sampler": [
+    "24",
+    0
+   ],
+   "sigmas": [
+    "25",
+    0
+   ],
+   "latent_image": [
+    "21",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "stage 2 (x2 refine)"
+  }
+ },
+ "27": {
+  "class_type": "LTXVSeparateAVLatent",
+  "inputs": {
+   "av_latent": [
+    "26",
+    0
+   ]
+  }
+ },
+ "28": {
+  "class_type": "VAEDecodeTiled",
+  "inputs": {
+   "samples": [
+    "27",
+    0
+   ],
+   "vae": [
+    "2",
+    2
+   ],
+   "tile_size": 768,
+   "overlap": 64,
+   "temporal_size": 4096,
+   "temporal_overlap": 4
+  }
+ },
+ "29": {
+  "class_type": "LTXVAudioVAEDecode",
+  "inputs": {
+   "samples": [
+    "27",
+    1
+   ],
+   "audio_vae": [
+    "5",
+    0
+   ]
+  }
+ },
+ "30": {
+  "class_type": "CreateVideo",
+  "inputs": {
+   "images": [
+    "28",
+    0
+   ],
+   "audio": [
+    "29",
+    0
+   ],
+   "fps": 24.0
+  }
+ },
+ "31": {
+  "class_type": "ArmyAutoOutput",
+  "inputs": {
+   "plan": [
+    "1",
+    0
+   ],
+   "filename_prefix": "army-of-loras",
+   "ltx23": [
+    "30",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Army of LoRAs: Auto Output"
+  }
+ }
+}

@@ -1,0 +1,18 @@
+[project]
+name = "army-of-loras-comfyui"
+version = "0.1.0"
+description = "Route every prompt to the right model (FLUX.2 klein, Qwen-Image 2.1, MOSS-Image, LTX-2.3, MiniMax H3) and a squad of SFW community LoRAs, decided in ~2 ms with pybed static embeddings."
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+dependencies = ["pybed @ git+https://github.com/lee101/pybed", "huggingface_hub>=0.24", "numpy>=1.23"]
+
+[project.urls]
+Repository = "https://github.com/lee101/army-of-loras-comfyui"
+
+[tool.comfy]
+PublisherId = "lee101"
+DisplayName = "Army of LoRAs"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--import-mode=importlib -q"

@@ -1,0 +1,293 @@
+{
+ "family": "h3",
+ "label": "MiniMax H3 (4-step turbo, video + audio)",
+ "mode": "video",
+ "base": "Comfy-Org/MiniMax-H3",
+ "base_license": "MiniMax H3 Community License",
+ "describes": [
+  "stylised animated video with sound",
+  "retro movie genre pastiche",
+  "low poly and pixel game footage",
+  "cartoon animation",
+  "handheld or first person camera footage"
+ ],
+ "keywords": [
+  "cartoon",
+  "low poly",
+  "pixel",
+  "1980s",
+  "1950s",
+  "handheld",
+  "fpv",
+  "first person",
+  "70s",
+  "animated"
+ ],
+ "prior": 0.0,
+ "avoid_weight": 0.5,
+ "max_total_strength": 1.8,
+ "min_score": 0.4,
+ "settings": {
+  "steps": 4,
+  "cfg": 1.0,
+  "sampler": "res_multistep",
+  "width": 832,
+  "height": 480,
+  "frames": 73,
+  "fps": 24
+ },
+ "loras": [
+  {
+   "id": "h3_lowpoly",
+   "name": "Low Poly (KennethFal)",
+   "repo": "KennethFal/low-poly-lora-minimax-h3",
+   "file": "low-poly.safetensors",
+   "license": "minimax-h3-community-license",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "low poly 3d animation",
+   "keywords": [
+    "low poly",
+    "low-poly",
+    "polygon*",
+    "ps1",
+    "n64"
+   ],
+   "exclude": [],
+   "positive": [
+    "late 90s low poly console game footage",
+    "faceted low polygon 3d characters"
+   ],
+   "avoid": [
+    "photoreal"
+   ]
+  },
+  {
+   "id": "h3_pixel16",
+   "name": "16-bit Pixel (KennethFal)",
+   "repo": "KennethFal/16bit-pixel-lora-minimax-h3",
+   "file": "16bit-pixel.safetensors",
+   "license": "minimax-h3-community-license",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "16-bit pixel art animation",
+   "keywords": [
+    "pixel art",
+    "pixel*",
+    "16-bit",
+    "8-bit",
+    "sprite*",
+    "retro game"
+   ],
+   "exclude": [],
+   "positive": [
+    "16-bit pixel art animation",
+    "retro snes style pixel game footage"
+   ],
+   "avoid": [
+    "photoreal"
+   ]
+  },
+  {
+   "id": "h3_retrotoon",
+   "name": "Retro Toon 70s (KennethFal)",
+   "repo": "KennethFal/retro-toon-70s-lora-minimax-h3",
+   "file": "retro-toon-70s.safetensors",
+   "license": "minimax-h3-community-license",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "1970s retro cartoon animation",
+   "keywords": [
+    "70s cartoon",
+    "1970s",
+    "retro cartoon",
+    "saturday morning",
+    "toon"
+   ],
+   "exclude": [],
+   "positive": [
+    "1970s hand drawn cartoon animation",
+    "retro saturday morning cartoon"
+   ],
+   "avoid": [
+    "photoreal",
+    "3d render"
+   ]
+  },
+  {
+   "id": "h3_rough2d",
+   "name": "Rough 2D Cartoon (prithivMLmods)",
+   "repo": "prithivMLmods/MiniMax-H3-Rough-2D-Cartoon-Illustration",
+   "file": "minimax-h3-rough-2d-cartoon-illustration-1200.safetensors",
+   "license": "minimax-h3-community-license",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "rough 2D cartoon illustration",
+   "keywords": [
+    "2d cartoon",
+    "cartoon",
+    "hand drawn",
+    "hand-drawn",
+    "sketchy"
+   ],
+   "exclude": [],
+   "positive": [
+    "rough hand drawn 2d cartoon illustration in motion",
+    "sketchy 2d animated cartoon"
+   ],
+   "avoid": [
+    "photoreal"
+   ]
+  },
+  {
+   "id": "h3_80s_scifi",
+   "name": "1980s Sci-Fi Movie (neph1)",
+   "repo": "neph1/1980s_scifi_movies_minimax_h3",
+   "file": "1980s_scifi_h3_100.safetensors",
+   "license": "minimax-h3-community-license",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "",
+   "keywords": [
+    "1980s",
+    "80s",
+    "sci-fi",
+    "scifi",
+    "spaceship",
+    "retro future"
+   ],
+   "exclude": [],
+   "positive": [
+    "1980s science fiction movie scene with practical effects",
+    "retro 80s spaceship corridor film"
+   ],
+   "avoid": [
+    "cartoon"
+   ]
+  },
+  {
+   "id": "h3_80s_fantasy",
+   "name": "1980s Fantasy Movie (neph1)",
+   "repo": "neph1/1980s_fantasy_movies_minimax_h3",
+   "file": "1980s_fantasy_h3_95.safetensors",
+   "license": "minimax-h3-community-license",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "",
+   "keywords": [
+    "fantasy",
+    "wizard",
+    "knight",
+    "dragon",
+    "sorcer*",
+    "castle"
+   ],
+   "exclude": [],
+   "positive": [
+    "1980s fantasy film with a knight and a wizard",
+    "retro sword and sorcery movie scene"
+   ],
+   "avoid": [
+    "modern city"
+   ]
+  },
+  {
+   "id": "h3_50s_western",
+   "name": "1950s Western Movie (neph1)",
+   "repo": "neph1/1950s_western_movies_h3",
+   "file": "1950s_western_h3_150.safetensors",
+   "license": "minimax-h3-community-license",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "",
+   "keywords": [
+    "western",
+    "cowboy*",
+    "frontier",
+    "saloon",
+    "desert canyon"
+   ],
+   "exclude": [],
+   "positive": [
+    "1950s technicolor western film scene",
+    "cowboys riding through a desert canyon"
+   ],
+   "avoid": [
+    "futuristic"
+   ]
+  },
+  {
+   "id": "h3_handheld",
+   "name": "Handheld Shaky Cam (neph1)",
+   "repo": "neph1/minimax_h3_handheld_shaky_camera",
+   "file": "handheld_h3_100.safetensors",
+   "license": "minimax-h3-community-license",
+   "group": "camera",
+   "strength": 0.9,
+   "trigger": "",
+   "keywords": [
+    "handheld",
+    "shaky",
+    "documentary",
+    "found footage"
+   ],
+   "exclude": [],
+   "positive": [
+    "handheld shaky camera footage",
+    "documentary style handheld shot"
+   ],
+   "avoid": [
+    "locked off tripod shot"
+   ]
+  },
+  {
+   "id": "h3_fpv",
+   "name": "Head-mounted FPV (neph1)",
+   "repo": "neph1/minimax_h3_headmounted_fpv_cam",
+   "file": "fpv_headbob_h3_50.safetensors",
+   "license": "minimax-h3-community-license",
+   "group": "camera",
+   "strength": 0.9,
+   "trigger": "",
+   "keywords": [
+    "fpv",
+    "first person",
+    "pov",
+    "head-mounted",
+    "helmet cam"
+   ],
+   "exclude": [],
+   "positive": [
+    "first person point of view walking with head bob",
+    "head mounted camera pov footage"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "h3_motion",
+   "name": "Better Human Motion (vpakarinen)",
+   "repo": "vpakarinen/better-human-motion-h3-lora",
+   "file": "better_motion_h3_lora_v1_500.safetensors",
+   "license": "apache-2.0",
+   "group": "motion",
+   "strength": 0.6,
+   "trigger": "",
+   "keywords": [
+    "walk*",
+    "dancing",
+    "dance*",
+    "running",
+    "gestur*"
+   ],
+   "exclude": [],
+   "positive": [
+    "a person walking and gesturing naturally",
+    "people dancing with smooth motion",
+    "an athlete running"
+   ],
+   "avoid": [
+    "empty landscape"
+   ]
+  }
+ ]
+}

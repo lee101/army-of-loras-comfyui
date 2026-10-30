@@ -1,0 +1,219 @@
+{
+ "family": "ltx23",
+ "label": "LTX-2.3 22B distilled (video + audio)",
+ "mode": "video",
+ "base": "Lightricks/LTX-2.3-fp8",
+ "base_license": "LTX-2 Community License",
+ "describes": [
+  "cinematic live action video with sound",
+  "realistic camera moves and natural motion",
+  "scene transformations and transitions",
+  "music-reactive visuals",
+  "pixel art animation"
+ ],
+ "keywords": [
+  "transition",
+  "transform*",
+  "morph*",
+  "audio-reactive",
+  "music",
+  "cinematic"
+ ],
+ "prior": 0.0,
+ "avoid_weight": 0.5,
+ "max_total_strength": 1.8,
+ "min_score": 0.4,
+ "negative": "pc game, console game, video game, cartoon, childish, ugly",
+ "settings": {
+  "steps": 8,
+  "cfg": 1.0,
+  "width": 768,
+  "height": 512,
+  "frames": 97,
+  "fps": 24
+ },
+ "loras": [
+  {
+   "id": "ltx_transition",
+   "name": "Transition (joyfox)",
+   "repo": "joyfox/LTX-2.3-Transition-LORA",
+   "file": "ltx2.3-transition.safetensors",
+   "license": "apache-2.0",
+   "group": "motion",
+   "strength": 1.0,
+   "trigger": "",
+   "keywords": [
+    "transition*",
+    "transform*",
+    "morph*",
+    "turns into",
+    "becomes"
+   ],
+   "exclude": [],
+   "positive": [
+    "an object turns into something else",
+    "a thing transforms into another thing",
+    "a character morphs into a different form",
+    "seamless transition from one scene into another"
+   ],
+   "avoid": [
+    "static still shot"
+   ]
+  },
+  {
+   "id": "ltx_motion",
+   "name": "Better Human Motion (vpakarinen)",
+   "repo": "vpakarinen/better-human-motion-ltx-lora",
+   "file": "motion_stabilizer_ltx_lora_v2.safetensors",
+   "license": "apache-2.0",
+   "group": "motion",
+   "strength": 0.6,
+   "trigger": "",
+   "keywords": [
+    "walk*",
+    "dancing",
+    "dance*",
+    "running",
+    "jump*",
+    "gestur*"
+   ],
+   "exclude": [],
+   "positive": [
+    "a person walking and gesturing naturally",
+    "people dancing with smooth body motion",
+    "an athlete running"
+   ],
+   "avoid": [
+    "empty landscape",
+    "abstract shapes"
+   ]
+  },
+  {
+   "id": "ltx_fastpaced",
+   "name": "Fast-paced Scene (siraxe)",
+   "repo": "siraxe/Fast-paced_scene_slider_LTX2.3",
+   "file": "LTX2.3_Fast-paced_scene_slider_v01.safetensors",
+   "license": "apache-2.0",
+   "group": "pace",
+   "strength": 1.5,
+   "trigger": "Fast-paced scene.",
+   "keywords": [
+    "fast",
+    "chase",
+    "high speed",
+    "action",
+    "racing"
+   ],
+   "exclude": [],
+   "positive": [
+    "fast paced action scene with quick motion",
+    "high speed chase",
+    "energetic rapid movement"
+   ],
+   "avoid": [
+    "calm slow scene"
+   ]
+  },
+  {
+   "id": "ltx_surfaces",
+   "name": "Surfaces Realism (joeygambino)",
+   "repo": "joeygambino/ltx23-surfaces-realism-lora",
+   "file": "ltx23_surfaces_v1.safetensors",
+   "license": "ltx-2-community-license",
+   "group": "look",
+   "strength": 0.8,
+   "trigger": "",
+   "keywords": [
+    "texture*",
+    "material*",
+    "macro",
+    "close-up",
+    "wood",
+    "metal",
+    "fabric"
+   ],
+   "exclude": [],
+   "positive": [
+    "close up of realistic materials: wood, metal, fabric, water",
+    "tactile product video with rich surface detail"
+   ],
+   "avoid": [
+    "cartoon",
+    "pixel art"
+   ]
+  },
+  {
+   "id": "ltx_pixelart",
+   "name": "Ume Pixel Art (OmerHagage)",
+   "repo": "OmerHagage/ltx2-ume-pixelart-lora",
+   "file": "lora_weights_step_02000.safetensors",
+   "license": "mit",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "ume-pixelart",
+   "keywords": [
+    "pixel art",
+    "pixelart",
+    "8-bit",
+    "16-bit",
+    "sprite*"
+   ],
+   "exclude": [],
+   "positive": [
+    "modern pixel art animation",
+    "retro pixel art game scene in motion"
+   ],
+   "avoid": [
+    "photoreal live action"
+   ]
+  },
+  {
+   "id": "ltx_googly",
+   "name": "Googly Eyes (TheBurgstall)",
+   "repo": "TheBurgstall/ltx-2.3-googlyeyes-lora",
+   "file": "googlyeyes-ltx-2.3-rank32-step03000.safetensors",
+   "license": "ltx-2-community-license",
+   "group": "style",
+   "strength": 1.0,
+   "trigger": "googlyeyes",
+   "keywords": [
+    "googly",
+    "googly eyes",
+    "googlyeyes"
+   ],
+   "exclude": [],
+   "positive": [
+    "everyday objects with googly eyes stuck on them",
+    "silly googly eyes comedy"
+   ],
+   "avoid": [],
+   "min_score": 0.5
+  },
+  {
+   "id": "ltx_audioreactive",
+   "name": "Audio Reactive (100percentrobot)",
+   "repo": "100percentrobot/LTX-2.3-Audio-Reactive-LORA",
+   "file": "LTX2.3_AudioReactiveV1.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 1.4,
+   "trigger": "continuous audio-reactive video",
+   "keywords": [
+    "audio-reactive",
+    "audio reactive",
+    "visualizer",
+    "visualiser",
+    "to the beat",
+    "music video"
+   ],
+   "exclude": [],
+   "positive": [
+    "abstract visuals pulsing to the beat of music",
+    "music visualizer with shapes reacting to sound"
+   ],
+   "avoid": [
+    "dialogue scene"
+   ]
+  }
+ ]
+}

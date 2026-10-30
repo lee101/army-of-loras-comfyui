@@ -1,0 +1,215 @@
+{
+ "1": {
+  "class_type": "ArmyLoraRouter",
+  "inputs": {
+   "prompt": "16-bit pixel art video of a fox running through a forest at dusk, chiptune music",
+   "family": "h3",
+   "max_loras": 3,
+   "strength_scale": 1.0,
+   "min_score_offset": 0.0
+  },
+  "_meta": {
+   "title": "Army of LoRAs: Router (pybed)"
+  }
+ },
+ "2": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "MiniMax H3 int8"
+  }
+ },
+ "3": {
+  "class_type": "LoraLoaderModelOnly",
+  "inputs": {
+   "model": [
+    "2",
+    0
+   ],
+   "lora_name": "minimax_h3_fl2v_turbo_4step_v0.1.safetensors",
+   "strength_model": 1.0
+  },
+  "_meta": {
+   "title": "H3 lightx2v turbo (4-step)"
+  }
+ },
+ "4": {
+  "class_type": "ArmyLoraApply",
+  "inputs": {
+   "model": [
+    "3",
+    0
+   ],
+   "plan": [
+    "1",
+    0
+   ],
+   "family": "h3"
+  },
+  "_meta": {
+   "title": "Army: apply H3 LoRAs"
+  }
+ },
+ "5": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+   "type": "minimax",
+   "device": "default"
+  }
+ },
+ "6": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+  }
+ },
+ "7": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+  }
+ },
+ "8": {
+  "class_type": "MiniMaxH3ImageToVideo",
+  "inputs": {
+   "clip": [
+    "5",
+    0
+   ],
+   "vae": [
+    "6",
+    0
+   ],
+   "prompt": [
+    "1",
+    1
+   ],
+   "width": 832,
+   "height": 480,
+   "length": 73
+  }
+ },
+ "9": {
+  "class_type": "BasicGuider",
+  "inputs": {
+   "model": [
+    "4",
+    0
+   ],
+   "conditioning": [
+    "8",
+    0
+   ]
+  }
+ },
+ "10": {
+  "class_type": "BasicScheduler",
+  "inputs": {
+   "model": [
+    "4",
+    0
+   ],
+   "scheduler": "simple",
+   "steps": 4,
+   "denoise": 1.0
+  }
+ },
+ "11": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "12": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "res_multistep"
+  }
+ },
+ "13": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "11",
+    0
+   ],
+   "guider": [
+    "9",
+    0
+   ],
+   "sampler": [
+    "12",
+    0
+   ],
+   "sigmas": [
+    "10",
+    0
+   ],
+   "latent_image": [
+    "8",
+    1
+   ]
+  }
+ },
+ "14": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "13",
+    0
+   ],
+   "vae": [
+    "6",
+    0
+   ]
+  }
+ },
+ "15": {
+  "class_type": "VAEDecodeAudio",
+  "inputs": {
+   "samples": [
+    "13",
+    0
+   ],
+   "vae": [
+    "7",
+    0
+   ]
+  }
+ },
+ "16": {
+  "class_type": "CreateVideo",
+  "inputs": {
+   "images": [
+    "14",
+    0
+   ],
+   "audio": [
+    "15",
+    0
+   ],
+   "fps": 24.0
+  }
+ },
+ "17": {
+  "class_type": "ArmyAutoOutput",
+  "inputs": {
+   "plan": [
+    "1",
+    0
+   ],
+   "filename_prefix": "army-of-loras",
+   "h3": [
+    "16",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Army of LoRAs: Auto Output"
+  }
+ }
+}

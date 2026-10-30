@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+models.local.json
+catalogs/raw/
+.venv/
+demo/build/

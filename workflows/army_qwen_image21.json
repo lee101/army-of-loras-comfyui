@@ -1,0 +1,896 @@
+{
+ "last_node_id": 15,
+ "last_link_id": 19,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "ArmyLoraRouter",
+   "pos": [
+    0,
+    60
+   ],
+   "size": [
+    340,
+    408
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "plan",
+     "type": "ARMY_PLAN",
+     "links": [
+      3,
+      18
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "prompt",
+     "type": "STRING",
+     "links": [
+      5
+     ],
+     "slot_index": 1
+    },
+    {
+     "name": "negative",
+     "type": "STRING",
+     "links": [
+      6
+     ],
+     "slot_index": 2
+    },
+    {
+     "name": "family",
+     "type": "STRING",
+     "links": [],
+     "slot_index": 3
+    },
+    {
+     "name": "is_video",
+     "type": "BOOLEAN",
+     "links": [],
+     "slot_index": 4
+    },
+    {
+     "name": "report",
+     "type": "STRING",
+     "links": [],
+     "slot_index": 5
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ArmyLoraRouter"
+   },
+   "widgets_values": [
+    "35mm film still of a neon noodle bar at night, a sign that says \"ARMY OF LORAS\"",
+    "qwen_image21",
+    3,
+    1.0,
+    0.0
+   ],
+   "title": "Army of LoRAs: Router (pybed)",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 2,
+   "type": "UNETLoader",
+   "pos": [
+    0,
+    618
+   ],
+   "size": [
+    340,
+    112
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "UNETLoader"
+   },
+   "widgets_values": [
+    "qwen_image_2.1_int8_convrot.safetensors",
+    "default"
+   ],
+   "title": "Qwen-Image 2.1"
+  },
+  {
+   "id": 3,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    380,
+    618
+   ],
+   "size": [
+    340,
+    134
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 1
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      2
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LoraLoaderModelOnly"
+   },
+   "widgets_values": [
+    "qwen-image-2.1-viggle-turbo-v0.3-6step-lora-r256.safetensors",
+    1.0
+   ],
+   "title": "Qwen 2.1 turbo (6-step)"
+  },
+  {
+   "id": 4,
+   "type": "ArmyLoraApply",
+   "pos": [
+    760,
+    618
+   ],
+   "size": [
+    340,
+    178
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 2
+    },
+    {
+     "name": "plan",
+     "type": "ARMY_PLAN",
+     "link": 3
+    },
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      7,
+      10
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [],
+     "slot_index": 1
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ArmyLoraApply"
+   },
+   "widgets_values": [
+    "qwen_image21"
+   ],
+   "title": "Army: apply Qwen LoRAs",
+   "color": "#223",
+   "bgcolor": "#335"
+  },
+  {
+   "id": 5,
+   "type": "CLIPLoader",
+   "pos": [
+    0,
+    760
+   ],
+   "size": [
+    340,
+    134
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      4
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CLIPLoader"
+   },
+   "widgets_values": [
+    "qwen3vl_8b_w4a8.safetensors",
+    "qwen_image",
+    "default"
+   ]
+  },
+  {
+   "id": 6,
+   "type": "VAELoader",
+   "pos": [
+    0,
+    924
+   ],
+   "size": [
+    340,
+    90
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      17
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAELoader"
+   },
+   "widgets_values": [
+    "qwen_image_2.1_vae_bf16.safetensors"
+   ]
+  },
+  {
+   "id": 7,
+   "type": "TextEncodeQwenImage21",
+   "pos": [
+    380,
+    782
+   ],
+   "size": [
+    340,
+    364
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "clip",
+     "type": "CLIP",
+     "link": 4
+    },
+    {
+     "name": "prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "prompt"
+     },
+     "link": 5
+    },
+    {
+     "name": "negative_prompt",
+     "type": "STRING",
+     "widget": {
+      "name": "negative_prompt"
+     },
+     "link": 6
+    },
+    {
+     "name": "images",
+     "type": "COMFY_AUTOGROW_V3",
+     "link": null
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "links": [
+      8
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "links": [
+      9
+     ],
+     "slot_index": 1
+    },
+    {
+     "name": "latent",
+     "type": "LATENT",
+     "links": [],
+     "slot_index": 2
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "TextEncodeQwenImage21"
+   },
+   "widgets_values": [
+    null,
+    null,
+    1024
+   ]
+  },
+  {
+   "id": 8,
+   "type": "CFGGuider",
+   "pos": [
+    1140,
+    618
+   ],
+   "size": [
+    340,
+    156
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 7
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 8
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 9
+    }
+   ],
+   "outputs": [
+    {
+     "name": "GUIDER",
+     "type": "GUIDER",
+     "links": [
+      12
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "CFGGuider"
+   },
+   "widgets_values": [
+    1.0
+   ]
+  },
+  {
+   "id": 9,
+   "type": "BasicScheduler",
+   "pos": [
+    1140,
+    804
+   ],
+   "size": [
+    340,
+    156
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 10
+    }
+   ],
+   "outputs": [
+    {
+     "name": "SIGMAS",
+     "type": "SIGMAS",
+     "links": [
+      14
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "BasicScheduler"
+   },
+   "widgets_values": [
+    "simple",
+    6,
+    1.0
+   ]
+  },
+  {
+   "id": 10,
+   "type": "EmptyLatentImage",
+   "pos": [
+    0,
+    1044
+   ],
+   "size": [
+    340,
+    134
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      15
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "EmptyLatentImage"
+   },
+   "widgets_values": [
+    1024,
+    1024,
+    1
+   ]
+  },
+  {
+   "id": 11,
+   "type": "RandomNoise",
+   "pos": [
+    0,
+    1208
+   ],
+   "size": [
+    340,
+    90
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "NOISE",
+     "type": "NOISE",
+     "links": [
+      11
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "RandomNoise"
+   },
+   "widgets_values": [
+    42,
+    "fixed"
+   ]
+  },
+  {
+   "id": 12,
+   "type": "KSamplerSelect",
+   "pos": [
+    0,
+    1328
+   ],
+   "size": [
+    340,
+    90
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "SAMPLER",
+     "type": "SAMPLER",
+     "links": [
+      13
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "KSamplerSelect"
+   },
+   "widgets_values": [
+    "euler"
+   ]
+  },
+  {
+   "id": 13,
+   "type": "SamplerCustomAdvanced",
+   "pos": [
+    1520,
+    618
+   ],
+   "size": [
+    340,
+    200
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "noise",
+     "type": "NOISE",
+     "link": 11
+    },
+    {
+     "name": "guider",
+     "type": "GUIDER",
+     "link": 12
+    },
+    {
+     "name": "sampler",
+     "type": "SAMPLER",
+     "link": 13
+    },
+    {
+     "name": "sigmas",
+     "type": "SIGMAS",
+     "link": 14
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 15
+    }
+   ],
+   "outputs": [
+    {
+     "name": "output",
+     "type": "LATENT",
+     "links": [
+      16
+     ],
+     "slot_index": 0
+    },
+    {
+     "name": "denoised_output",
+     "type": "LATENT",
+     "links": [],
+     "slot_index": 1
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "SamplerCustomAdvanced"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 14,
+   "type": "VAEDecode",
+   "pos": [
+    1900,
+    618
+   ],
+   "size": [
+    340,
+    112
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "samples",
+     "type": "LATENT",
+     "link": 16
+    },
+    {
+     "name": "vae",
+     "type": "VAE",
+     "link": 17
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      19
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "VAEDecode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 15,
+   "type": "ArmyAutoOutput",
+   "pos": [
+    2280,
+    60
+   ],
+   "size": [
+    340,
+    200
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "plan",
+     "type": "ARMY_PLAN",
+     "link": 18
+    },
+    {
+     "name": "flux2_klein9b",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "qwen_image21",
+     "type": "IMAGE",
+     "link": 19
+    },
+    {
+     "name": "moss",
+     "type": "IMAGE",
+     "link": null
+    },
+    {
+     "name": "ltx23",
+     "type": "VIDEO",
+     "link": null
+    },
+    {
+     "name": "h3",
+     "type": "VIDEO",
+     "link": null
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "ArmyAutoOutput"
+   },
+   "widgets_values": [
+    "army-of-loras"
+   ],
+   "title": "Army of LoRAs: Auto Output",
+   "color": "#223",
+   "bgcolor": "#335"
+  }
+ ],
+ "links": [
+  [
+   1,
+   2,
+   0,
+   3,
+   0,
+   "MODEL"
+  ],
+  [
+   2,
+   3,
+   0,
+   4,
+   0,
+   "MODEL"
+  ],
+  [
+   3,
+   1,
+   0,
+   4,
+   1,
+   "ARMY_PLAN"
+  ],
+  [
+   4,
+   5,
+   0,
+   7,
+   0,
+   "CLIP"
+  ],
+  [
+   5,
+   1,
+   1,
+   7,
+   1,
+   "STRING"
+  ],
+  [
+   6,
+   1,
+   2,
+   7,
+   2,
+   "STRING"
+  ],
+  [
+   7,
+   4,
+   0,
+   8,
+   0,
+   "MODEL"
+  ],
+  [
+   8,
+   7,
+   0,
+   8,
+   1,
+   "CONDITIONING"
+  ],
+  [
+   9,
+   7,
+   1,
+   8,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   10,
+   4,
+   0,
+   9,
+   0,
+   "MODEL"
+  ],
+  [
+   11,
+   11,
+   0,
+   13,
+   0,
+   "NOISE"
+  ],
+  [
+   12,
+   8,
+   0,
+   13,
+   1,
+   "GUIDER"
+  ],
+  [
+   13,
+   12,
+   0,
+   13,
+   2,
+   "SAMPLER"
+  ],
+  [
+   14,
+   9,
+   0,
+   13,
+   3,
+   "SIGMAS"
+  ],
+  [
+   15,
+   10,
+   0,
+   13,
+   4,
+   "LATENT"
+  ],
+  [
+   16,
+   13,
+   0,
+   14,
+   0,
+   "LATENT"
+  ],
+  [
+   17,
+   6,
+   0,
+   14,
+   1,
+   "VAE"
+  ],
+  [
+   18,
+   1,
+   0,
+   15,
+   0,
+   "ARMY_PLAN"
+  ],
+  [
+   19,
+   14,
+   0,
+   15,
+   2,
+   "IMAGE"
+  ]
+ ],
+ "groups": [
+  {
+   "title": "Army of LoRAs: pybed router + auto output",
+   "bounding": [
+    -20,
+    10,
+    2660,
+    478
+   ],
+   "color": "#3f789e",
+   "font_size": 28,
+   "flags": {}
+  },
+  {
+   "title": "Qwen-Image 2.1  (image)",
+   "bounding": [
+    -20,
+    568,
+    2280,
+    870
+   ],
+   "color": "#88A",
+   "font_size": 28,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ds": {
+   "scale": 0.5,
+   "offset": [
+    40,
+    40
+   ]
+  }
+ },
+ "version": 0.4
+}

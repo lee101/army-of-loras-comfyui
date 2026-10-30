@@ -1,0 +1,166 @@
+{
+ "1": {
+  "class_type": "ArmyLoraRouter",
+  "inputs": {
+   "prompt": "a monet style garden with a wooden footbridge over a lily pond",
+   "family": "moss",
+   "max_loras": 3,
+   "strength_scale": 1.0,
+   "min_score_offset": 0.0
+  },
+  "_meta": {
+   "title": "Army of LoRAs: Router (pybed)"
+  }
+ },
+ "2": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "moss_image_sft_int8_convrot.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "MOSS-Image SFT int8"
+  }
+ },
+ "3": {
+  "class_type": "ArmyLoraApply",
+  "inputs": {
+   "model": [
+    "2",
+    0
+   ],
+   "plan": [
+    "1",
+    0
+   ],
+   "family": "moss"
+  },
+  "_meta": {
+   "title": "Army: apply MOSS LoRAs"
+  }
+ },
+ "4": {
+  "class_type": "RapidMOSSAdapter",
+  "inputs": {
+   "model": [
+    "3",
+    0
+   ],
+   "adapter": "rapid-moss-4step",
+   "steps": 4,
+   "lora_strength": 1.0
+  },
+  "_meta": {
+   "title": "rapid-moss 4-step adapter"
+  }
+ },
+ "5": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "qwen3.5_9b_int8_convrot.safetensors",
+   "type": "moss_image",
+   "device": "default"
+  }
+ },
+ "6": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": [
+    "1",
+    1
+   ],
+   "clip": [
+    "5",
+    0
+   ]
+  }
+ },
+ "7": {
+  "class_type": "BasicGuider",
+  "inputs": {
+   "model": [
+    "4",
+    0
+   ],
+   "conditioning": [
+    "6",
+    0
+   ]
+  }
+ },
+ "8": {
+  "class_type": "EmptyFlux2LatentImage",
+  "inputs": {
+   "width": 1024,
+   "height": 1024,
+   "batch_size": 1
+  }
+ },
+ "9": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "10": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "9",
+    0
+   ],
+   "guider": [
+    "7",
+    0
+   ],
+   "sampler": [
+    "4",
+    1
+   ],
+   "sigmas": [
+    "4",
+    2
+   ],
+   "latent_image": [
+    "8",
+    0
+   ]
+  }
+ },
+ "11": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "flux2-vae.safetensors"
+  }
+ },
+ "12": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "10",
+    0
+   ],
+   "vae": [
+    "11",
+    0
+   ]
+  }
+ },
+ "13": {
+  "class_type": "ArmyAutoOutput",
+  "inputs": {
+   "plan": [
+    "1",
+    0
+   ],
+   "filename_prefix": "army-of-loras",
+   "moss": [
+    "12",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Army of LoRAs: Auto Output"
+  }
+ }
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Army of LoRAs Studio</title>
+<style>
+  :root { --bg:#0f1115; --panel:#171a21; --line:#2a2f3a; --text:#e6e8ee; --dim:#9aa3b2; --accent:#7cc4ff; --ok:#7ee0a1; --warn:#ffb86b; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.45 system-ui, -apple-system, Segoe UI, sans-serif; }
+  header { padding:18px 28px; border-bottom:1px solid var(--line); display:flex; align-items:baseline; gap:16px; }
+  header h1 { margin:0; font-size:20px; letter-spacing:.3px; }
+  header span { color:var(--dim); font-size:13px; }
+  main { display:grid; grid-template-columns: minmax(380px, 1fr) minmax(420px, 1.2fr); gap:20px; padding:20px 28px; }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; }
+  textarea { width:100%; min-height:96px; background:#0b0d11; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:10px; font:inherit; resize:vertical; }
+  select, button { background:#0b0d11; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:8px 12px; font:inherit; }
+  button.primary { background:var(--accent); color:#06121d; border:none; font-weight:600; cursor:pointer; }
+  button:disabled { opacity:.5; cursor:wait; }
+  .row { display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap; }
+  .chip { display:inline-block; padding:2px 9px; border-radius:99px; border:1px solid var(--line); font-size:12px; color:var(--dim); }
+  .chip.on { color:#06121d; background:var(--ok); border-color:var(--ok); }
+  .fam { display:grid; grid-template-columns: 150px 1fr 52px; gap:8px; align-items:center; font-size:13px; margin:4px 0; }
+  .bar { height:8px; background:#0b0d11; border-radius:4px; overflow:hidden; }
+  .bar > i { display:block; height:100%; background:var(--accent); }
+  .lora { border-top:1px solid var(--line); padding:8px 0; display:grid; grid-template-columns: 54px 1fr 64px; gap:10px; align-items:center; }
+  .lora b { font-weight:600; }
+  .lora small { color:var(--dim); display:block; }
+  .lora.bench { opacity:.55; }
+  .strength { font-variant-numeric: tabular-nums; color:var(--ok); font-weight:600; }
+  .score { font-variant-numeric: tabular-nums; color:var(--dim); text-align:right; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:12.5px; color:var(--dim); white-space:pre-wrap; }
+  #result img, #result video { width:100%; border-radius:8px; display:block; background:#000; }
+  .refused { color:var(--warn); }
+  h3 { margin:14px 0 6px; font-size:13px; color:var(--dim); text-transform:uppercase; letter-spacing:.8px; }
+  a { color:var(--accent); }
+  details summary { cursor:pointer; color:var(--dim); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Army of LoRAs</h1>
+  <span>type a prompt; pybed static embeddings pick image vs video, the model, and a squad of community LoRAs, live</span>
+</header>
+<main>
+  <section class="panel">
+    <textarea id="prompt">a cute sticker of a red panda eating ramen, pixel art</textarea>
+    <div class="row">
+      <select id="family">
+        <option value="auto">auto (image or video)</option>
+        <option value="auto_image">auto image</option>
+        <option value="auto_video">auto video</option>
+        <option value="flux2_klein9b">FLUX.2 [klein] 9B</option>
+        <option value="qwen_image21">Qwen-Image 2.1</option>
+        <option value="moss">MOSS-Image</option>
+        <option value="ltx23">LTX-2.3 (video)</option>
+        <option value="h3">MiniMax H3 (video)</option>
+      </select>
+      <button class="primary" id="go">Generate in ComfyUI</button>
+      <span id="status" class="chip">idle</span>
+    </div>
+    <div id="plan"></div>
+    <details style="margin-top:14px"><summary>the whole army (catalog)</summary><div id="catalog" class="mono"></div></details>
+  </section>
+  <section class="panel">
+    <div id="result" class="mono">Results appear here. Images take seconds, videos a few minutes on a 24 GB GPU.</div>
+    <h3>prompt sent to the model</h3>
+    <div id="final" class="mono"></div>
+  </section>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+let timer = null, lastPlan = null;
+
+function bar(v, max = 1) { return `<div class="bar"><i style="width:${Math.max(0, Math.min(100, 100 * v / max)).toFixed(0)}%"></i></div>`; }
+
+async function preview() {
+  const prompt = $("prompt").value.trim();
+  if (!prompt) return;
+  const q = new URLSearchParams({ prompt, family: $("family").value });
+  const t0 = performance.now();
+  const plan = await (await fetch(`/army/route?${q}`)).json();
+  const ms = performance.now() - t0;
+  if (plan.refused) { $("plan").innerHTML = `<p class="refused">${plan.refused}</p>`; lastPlan = null; return; }
+  lastPlan = plan;
+  const fams = Object.entries(plan.family_scores || {}).sort((a, b) => b[1] - a[1]);
+  const maxF = Math.max(0.01, ...fams.map((f) => f[1]));
+  const drafted = new Set(plan.loras.map((l) => l.id));
+  let html = `<h3>decision <span class="chip">${plan.elapsed_ms.toFixed(2)} ms routing, ${ms.toFixed(0)} ms round trip</span></h3>
+    <div class="row"><span class="chip on">${plan.mode}</span><span class="chip on">${plan.family_label}</span></div>`;
+  if (fams.length) html += `<h3>model fit</h3>` + fams.map(([f, v]) => `<div class="fam"><span>${f}</span>${bar(v, maxF)}<span class="score">${v.toFixed(2)}</span></div>`).join("");
+  html += `<h3>drafted LoRAs</h3>`;
+  if (!plan.loras.length) html += `<p class="mono">none: nothing in this model's army fits well enough, so it renders on the base model</p>`;
+  for (const l of plan.loras) {
+    html += `<div class="lora"><span class="strength">${l.strength.toFixed(2)}x</span>
+      <span><b>${l.name}</b><small>matched "${l.matched}"${l.keyword ? ` + keyword '${l.keyword}'` : ""}</small>
+      <small><a href="https://huggingface.co/${l.repo}" target="_blank">${l.repo}</a> &middot; ${l.license}</small></span>
+      <span class="score">${l.score.toFixed(2)}</span></div>`;
+  }
+  const bench = plan.considered.filter((c) => !drafted.has(c.id)).slice(0, 4);
+  if (bench.length) html += `<h3>bench</h3>` + bench.map((c) => `<div class="lora bench"><span></span><span>${c.name}<small>${c.eligible ? "eligible but its group was taken" : "below threshold"}</small></span><span class="score">${c.score.toFixed(2)}</span></div>`).join("");
+  $("plan").innerHTML = html;
+  $("final").textContent = plan.prompt + (plan.negative ? `\n\nnegative: ${plan.negative}` : "");
+}
+
+$("prompt").addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(preview, 120); });
+$("family").addEventListener("change", preview);
+
+async function generate() {
+  if (!lastPlan) return;
+  $("go").disabled = true;
+  $("status").textContent = "queued";
+  try {
+    const wf = await (await fetch(`/army/workflow/auto`)).json();
+    for (const node of Object.values(wf)) {
+      if (node.class_type === "ArmyLoraRouter") { node.inputs.prompt = $("prompt").value; node.inputs.family = $("family").value; }
+      if (node.class_type === "RandomNoise") node.inputs.noise_seed = Math.floor(Math.random() * 1e9);
+    }
+    const r = await (await fetch("/prompt", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prompt: wf }) })).json();
+    if (!r.prompt_id) throw new Error(JSON.stringify(r).slice(0, 400));
+    const t0 = Date.now();
+    for (;;) {
+      await new Promise((ok) => setTimeout(ok, 1500));
+      $("status").textContent = `running ${((Date.now() - t0) / 1000).toFixed(0)} s`;
+      const h = (await (await fetch(`/history/${r.prompt_id}`)).json())[r.prompt_id];
+      if (!h) continue;
+      if (h.status?.status_str === "error") throw new Error("ComfyUI reported an error, see the server log");
+      for (const out of Object.values(h.outputs)) {
+        for (const item of out.images || []) {
+          const src = `/view?${new URLSearchParams({ filename: item.filename, subfolder: item.subfolder, type: item.type })}`;
+          $("result").innerHTML = item.filename.endsWith(".mp4") ? `<video src="${src}" controls autoplay loop></video>` : `<img src="${src}">`;
+        }
+      }
+      $("status").textContent = `done in ${((Date.now() - t0) / 1000).toFixed(0)} s`;
+      break;
+    }
+  } catch (e) {
+    $("status").textContent = "error";
+    $("result").textContent = String(e);
+  } finally {
+    $("go").disabled = false;
+  }
+}
+$("go").addEventListener("click", generate);
+
+(async () => {
+  const cat = await (await fetch("/army/catalog")).json();
+  let n = 0, txt = "";
+  for (const [fam, c] of Object.entries(cat)) {
+    txt += `\n${c.label}  [${c.mode}]  base: ${c.base} (${c.base_license})\n`;
+    for (const l of c.loras) { n++; txt += `  ${l.group.padEnd(7)} ${l.name.padEnd(42)} ${l.license}\n`; }
+  }
+  $("catalog").textContent = `${n} community LoRAs, all SFW and licence-checked\n` + txt;
+  preview();
+})();
+</script>
+</body>
+</html>

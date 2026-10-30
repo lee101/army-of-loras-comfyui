@@ -1,0 +1,18 @@
+# One prompt per line; the router (family=auto) decides image vs video, the model, and the LoRAs.
+a cute sticker of a red panda eating ramen, pixel art
+isometric diorama of a cozy wizard library with floating books
+a crochet amigurumi octopus reading a newspaper on a wooden table
+claymation snail astronaut planting a flag on a mushroom planet
+technical blueprint wireframe of a vintage steam locomotive
+a vintage travel poster that says "VISIT THE MOON" in bold retro letters
+35mm film still of a neon noodle bar on a rainy night, steam rising from the bowls
+synthwave outrun sunset over a chrome city with a palm-lined highway
+a monet style garden with a wooden footbridge over a lily pond
+shot on kodachrome, a 1950s roadside diner at dusk with a red convertible
+a psychedelic poster of a glowing mushroom forest with swirling skies
+gouache storybook illustration of a fox and a badger sharing tea in the rain
+16-bit pixel art video of a fox running through a forest at dusk
+video of a knight and a wizard walking through an enchanted forest, 1980s fantasy movie
+a 1970s retro cartoon animation of a robot dancing in a disco
+a paper boat transforms into a glowing koi fish as it drifts down a rainy street, cinematic video
+slow motion video of googly eyes on a stack of pancakes as syrup pours over them

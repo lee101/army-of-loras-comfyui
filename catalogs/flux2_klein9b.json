@@ -1,0 +1,761 @@
+{
+ "family": "flux2_klein9b",
+ "label": "FLUX.2 [klein] 9B (4-step distilled)",
+ "mode": "image",
+ "base": "black-forest-labs/FLUX.2-klein-9b-fp8",
+ "base_license": "FLUX Non-Commercial License",
+ "describes": [
+  "fast stylised illustration and graphic design",
+  "stickers, icons, logos and emoji",
+  "pixel art, isometric and 3d render game assets",
+  "cartoon and children's book art",
+  "retro photo looks like polaroid and analog film"
+ ],
+ "keywords": [
+  "sticker*",
+  "logo",
+  "icon*",
+  "emoji",
+  "pixel art",
+  "isometric",
+  "coloring book",
+  "doodle",
+  "amigurumi",
+  "crochet",
+  "mockup",
+  "t-shirt",
+  "album cover",
+  "book cover",
+  "polaroid"
+ ],
+ "prior": 0.02,
+ "avoid_weight": 0.5,
+ "max_total_strength": 1.7,
+ "min_score": 0.4,
+ "settings": {
+  "steps": 4,
+  "cfg": 1.0,
+  "sampler": "euler",
+  "scheduler": "simple",
+  "width": 1024,
+  "height": 1024
+ },
+ "loras": [
+  {
+   "id": "redmond_pixelart",
+   "name": "Pixel Art (Redmond)",
+   "repo": "artificialguybr/PIXELART-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]PixelArt_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "trigger": "Pixel Art, PixArFK",
+   "keywords": [
+    "pixel art",
+    "pixelart",
+    "8-bit",
+    "16-bit",
+    "sprite*",
+    "retro game"
+   ],
+   "exclude": [],
+   "positive": [
+    "pixel art game sprite",
+    "retro 8-bit pixel art scene",
+    "16-bit video game screenshot with pixels"
+   ],
+   "avoid": [
+    "smooth photograph",
+    "oil painting"
+   ]
+  },
+  {
+   "id": "redmond_isometric",
+   "name": "Isometric (Redmond)",
+   "repo": "artificialguybr/ISOMETRIC-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]Isometric_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "trigger": "ISOMETRIC",
+   "keywords": [
+    "isometric",
+    "diorama",
+    "miniature"
+   ],
+   "exclude": [],
+   "positive": [
+    "isometric diorama of a tiny room",
+    "isometric miniature city block",
+    "isometric game level tile"
+   ],
+   "avoid": [
+    "close-up portrait",
+    "first person view"
+   ]
+  },
+  {
+   "id": "redmond_3drender",
+   "name": "3D Render (Redmond)",
+   "repo": "artificialguybr/3DRenderStyle-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]3DRenderStyle_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "3D Render Style, 3DRenderAF",
+   "keywords": [
+    "3d render",
+    "blender",
+    "octane",
+    "c4d",
+    "mascot"
+   ],
+   "exclude": [],
+   "positive": [
+    "glossy 3d render of a cute character",
+    "blender 3d render with soft studio lighting",
+    "3d cartoon mascot render"
+   ],
+   "avoid": [
+    "flat 2d drawing",
+    "film photograph"
+   ]
+  },
+  {
+   "id": "redmond_clay",
+   "name": "Clay Animation (Redmond)",
+   "repo": "artificialguybr/ClayAnimation-Redmond-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]ClayAnimation_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "trigger": "Clay animation, Clay.",
+   "keywords": [
+    "clay*",
+    "plasticine",
+    "stop motion",
+    "stop-motion"
+   ],
+   "exclude": [],
+   "positive": [
+    "claymation stop motion figure",
+    "plasticine clay character",
+    "clay animation set with fingerprints"
+   ],
+   "avoid": [
+    "photograph of a real person"
+   ]
+  },
+  {
+   "id": "redmond_amigurumi",
+   "name": "Crochet Amigurumi (Redmond)",
+   "repo": "artificialguybr/CROCHET-AMIGURUMI-REDMOND-FLUXKLEIN",
+   "file": "[FLUX.2.Klein]CrochetAmigurumi_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "trigger": "Amigurumi, Crochet.",
+   "keywords": [
+    "amigurumi",
+    "crochet*",
+    "knitted",
+    "yarn",
+    "plush"
+   ],
+   "exclude": [],
+   "positive": [
+    "crochet amigurumi toy animal",
+    "knitted yarn plush doll",
+    "handmade wool toy"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "redmond_coloringbook",
+   "name": "Coloring Book (Redmond)",
+   "repo": "artificialguybr/COLORINGBOOK-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]ColoringBook_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "trigger": "Coloring Book, ColoringBookAF",
+   "keywords": [
+    "coloring book",
+    "colouring book",
+    "coloring page",
+    "line art"
+   ],
+   "exclude": [],
+   "positive": [
+    "black and white coloring book page with clean outlines",
+    "line art for kids to color in"
+   ],
+   "avoid": [
+    "full colour painting",
+    "photograph"
+   ]
+  },
+  {
+   "id": "redmond_doodle",
+   "name": "Doodle (Redmond)",
+   "repo": "artificialguybr/Doodle-Redmond-FluxKlein9B",
+   "file": "[FLUX.2.Klein]Doodle_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "Doodle, DoodleRedm",
+   "keywords": [
+    "doodle*",
+    "notebook sketch",
+    "marker drawing"
+   ],
+   "exclude": [],
+   "positive": [
+    "hand drawn doodle sketch in a notebook",
+    "playful marker doodle illustration"
+   ],
+   "avoid": [
+    "photorealistic"
+   ]
+  },
+  {
+   "id": "redmond_kidsbook",
+   "name": "Kids Book (Redmond)",
+   "repo": "artificialguybr/KidsBook-Redmond-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]Kids_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "Kids Book.",
+   "keywords": [
+    "storybook",
+    "picture book",
+    "children's book",
+    "kids book",
+    "fairy tale"
+   ],
+   "exclude": [],
+   "positive": [
+    "children's storybook illustration",
+    "whimsical picture book page with cute animals",
+    "bedtime story illustration"
+   ],
+   "avoid": [
+    "dark horror",
+    "photograph"
+   ]
+  },
+  {
+   "id": "redmond_cutecartoon",
+   "name": "Cute Cartoon (Redmond)",
+   "repo": "artificialguybr/CuteCartoon-Redmond-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]CuteCartoon_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.8,
+   "trigger": "Cute Cartoon, CuteCartoonAF",
+   "keywords": [
+    "cute",
+    "kawaii",
+    "chibi",
+    "cartoon"
+   ],
+   "exclude": [],
+   "positive": [
+    "cute chibi cartoon animal",
+    "kawaii cartoon character with big eyes",
+    "adorable mascot cartoon"
+   ],
+   "avoid": [
+    "realistic photograph",
+    "gritty"
+   ]
+  },
+  {
+   "id": "redmond_anime",
+   "name": "Anime (Redmond)",
+   "repo": "artificialguybr/ANIME-REDMOND-FLUXKLEIN",
+   "file": "[FLUX.2.Klein]Anime_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "Anime, AnimedREDAF",
+   "keywords": [
+    "anime",
+    "manga",
+    "cel shaded",
+    "cel-shaded"
+   ],
+   "exclude": [],
+   "positive": [
+    "anime illustration of a character",
+    "cel shaded anime key visual",
+    "manga style hero"
+   ],
+   "avoid": [
+    "photograph",
+    "3d render"
+   ]
+  },
+  {
+   "id": "redmond_lineart",
+   "name": "Lineart Anime (Redmond)",
+   "repo": "artificialguybr/LineartAnime-Redmond-Flux9BKlein",
+   "file": "[FLUX.2.Klein]LineArt_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "Lineart, LineAniAF",
+   "keywords": [
+    "lineart",
+    "line art",
+    "ink drawing",
+    "inked"
+   ],
+   "exclude": [],
+   "positive": [
+    "clean ink lineart drawing",
+    "monochrome line drawing of a character"
+   ],
+   "avoid": [
+    "full colour photograph"
+   ]
+  },
+  {
+   "id": "redmond_sticker",
+   "name": "Stickers (Redmond)",
+   "repo": "artificialguybr/STICKERS-REDMOND-FLUX-KLEIN-9B",
+   "file": "[FLUX.2.Klein]Stickers_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "format",
+   "strength": 0.9,
+   "trigger": "Sticker, Stickers",
+   "keywords": [
+    "sticker*",
+    "die-cut",
+    "decal"
+   ],
+   "exclude": [],
+   "positive": [
+    "die-cut vinyl sticker with white border",
+    "cute sticker design of an animal"
+   ],
+   "avoid": [
+    "landscape photograph"
+   ]
+  },
+  {
+   "id": "redmond_emoji",
+   "name": "Fluent Emoji (Redmond)",
+   "repo": "artificialguybr/FLUENT-EMOJI-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]Emoji_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "format",
+   "strength": 0.9,
+   "trigger": "EMOJI",
+   "keywords": [
+    "emoji*",
+    "emoticon"
+   ],
+   "exclude": [],
+   "positive": [
+    "glossy 3d emoji icon",
+    "single emoji character on plain background"
+   ],
+   "avoid": [
+    "detailed scene",
+    "landscape"
+   ]
+  },
+  {
+   "id": "redmond_logo",
+   "name": "Logo (Redmond)",
+   "repo": "artificialguybr/Logo-Redmond-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]Logo_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "format",
+   "strength": 0.8,
+   "trigger": "LOGO, logoredmaf",
+   "keywords": [
+    "logo*",
+    "brand mark",
+    "emblem",
+    "badge"
+   ],
+   "exclude": [],
+   "positive": [
+    "minimal vector logo design",
+    "brand mark icon for a company"
+   ],
+   "avoid": [
+    "photograph of people",
+    "busy scene"
+   ]
+  },
+  {
+   "id": "redmond_tshirt",
+   "name": "T-shirt Design (Redmond)",
+   "repo": "artificialguybr/TSHIRTDESIGN-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]Tshirtdesign_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "format",
+   "strength": 0.85,
+   "trigger": "T shirt design, TshirtDesignAF",
+   "keywords": [
+    "t-shirt",
+    "tshirt",
+    "tee shirt",
+    "shirt design",
+    "merch"
+   ],
+   "exclude": [],
+   "positive": [
+    "bold t-shirt print graphic",
+    "vintage tee shirt design illustration"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "redmond_albumcover",
+   "name": "Album Cover (Redmond)",
+   "repo": "artificialguybr/ALBUMCOVER-REDMOND-FLUXKLEIN",
+   "file": "[FLUX.2.Klein]AlbumCover_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "format",
+   "strength": 0.8,
+   "trigger": "ALBUM COVER.",
+   "keywords": [
+    "album cover",
+    "album art",
+    "record sleeve",
+    "vinyl cover"
+   ],
+   "exclude": [],
+   "positive": [
+    "music album cover art",
+    "vinyl record sleeve artwork"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "redmond_bookcover",
+   "name": "Book Cover (Redmond)",
+   "repo": "artificialguybr/BOOKCOVER-REDMOND-FLUXKLEIN",
+   "file": "[FLUX.2.Klein]BookCover_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "format",
+   "strength": 0.8,
+   "trigger": "Book Cover",
+   "keywords": [
+    "book cover",
+    "novel cover",
+    "paperback"
+   ],
+   "exclude": [],
+   "positive": [
+    "novel book cover design",
+    "fantasy paperback cover art"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "redmond_mockup",
+   "name": "Mockups (Redmond)",
+   "repo": "artificialguybr/MOCKUPS-REDMOND-FLUXKLEIN",
+   "file": "[FLUX.2.Klein]Mockups_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "format",
+   "strength": 0.8,
+   "trigger": "Mockup.",
+   "keywords": [
+    "mockup*",
+    "packaging",
+    "product shot"
+   ],
+   "exclude": [],
+   "positive": [
+    "product packaging mockup",
+    "branding mockup on a desk"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "redmond_digitalasset",
+   "name": "Digital Asset (Redmond)",
+   "repo": "artificialguybr/DIGITALASSET-REDMOND-FLUXKLEIN",
+   "file": "[FLUX.2.Klein]DigitalAssetMedia_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "format",
+   "strength": 0.85,
+   "trigger": "Digital Asset.",
+   "keywords": [
+    "game asset",
+    "item icon",
+    "inventory icon",
+    "game icon*"
+   ],
+   "exclude": [],
+   "positive": [
+    "game item icon asset on plain background",
+    "fantasy potion inventory icon",
+    "collectible item asset"
+   ],
+   "avoid": [
+    "wide landscape"
+   ]
+  },
+  {
+   "id": "redmond_cutefruits",
+   "name": "Cute Fruits (Redmond)",
+   "repo": "artificialguybr/CUTEFRUITS-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]CuteFruits_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.8,
+   "trigger": "CtFruitsRedmAF",
+   "keywords": [
+    "fruit*",
+    "strawberr*",
+    "banana*",
+    "watermelon*"
+   ],
+   "exclude": [],
+   "positive": [
+    "cute smiling fruit characters",
+    "kawaii strawberry with a face"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "redmond_ps1",
+   "name": "PS1 Graphics (Redmond)",
+   "repo": "artificialguybr/PS1Graphics-Redmond-FluxKlein9B",
+   "file": "[FLUX.2.Klein]PS1Screencap_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "Playstation 1 Graphics, PS1 Game.",
+   "keywords": [
+    "ps1",
+    "low poly",
+    "low-poly",
+    "90s game",
+    "retro 3d"
+   ],
+   "exclude": [],
+   "positive": [
+    "low poly 1990s console game screenshot",
+    "retro playstation era 3d graphics"
+   ],
+   "avoid": [
+    "modern 4k photo"
+   ]
+  },
+  {
+   "id": "redmond_doubleexposure",
+   "name": "Double Exposure (Redmond)",
+   "repo": "artificialguybr/DOUBLEEXPOSURE-REDMOND-FLUXKLEIN",
+   "file": "[FLUX.2.Klein]DoubleExposure_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "Double Exposure, DoubleExposureREDAF.",
+   "keywords": [
+    "double exposure"
+   ],
+   "exclude": [],
+   "positive": [
+    "double exposure silhouette filled with a forest",
+    "artistic double exposure portrait and landscape"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "redmond_filmstill",
+   "name": "Cinematic Film Still (Redmond)",
+   "repo": "artificialguybr/CINEMATIC-FILMSTILL-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]FilmStill_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "look",
+   "strength": 0.7,
+   "trigger": "Cinematic, Film Still.",
+   "keywords": [
+    "cinematic",
+    "film still",
+    "movie still",
+    "movie scene"
+   ],
+   "exclude": [],
+   "positive": [
+    "cinematic movie still with dramatic lighting",
+    "widescreen film scene with color grading"
+   ],
+   "avoid": [
+    "cartoon",
+    "flat icon"
+   ]
+  },
+  {
+   "id": "redmond_analog",
+   "name": "Analog Film (Redmond)",
+   "repo": "artificialguybr/ANALOG-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]Analog_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "look",
+   "strength": 0.7,
+   "trigger": "Analog, AnalogRedmAF",
+   "keywords": [
+    "analog",
+    "35mm",
+    "film photo*",
+    "kodak",
+    "vintage photo"
+   ],
+   "exclude": [],
+   "positive": [
+    "analog 35mm film photograph",
+    "vintage film camera snapshot with warm tones"
+   ],
+   "avoid": [
+    "vector illustration",
+    "3d render"
+   ]
+  },
+  {
+   "id": "redmond_polaroid",
+   "name": "Polaroid (Redmond)",
+   "repo": "artificialguybr/POLAROID-REDMOND-FLUXKLEIN",
+   "file": "[FLUX.2.Klein]Polaroid_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "look",
+   "strength": 0.75,
+   "trigger": "Polaroid Photo, PolaroidRedAF",
+   "keywords": [
+    "polaroid",
+    "instant photo",
+    "instant camera"
+   ],
+   "exclude": [],
+   "positive": [
+    "instant polaroid photo with white frame",
+    "faded instant camera snapshot"
+   ],
+   "avoid": [
+    "illustration"
+   ]
+  },
+  {
+   "id": "redmond_filmgrain",
+   "name": "Film Grain (Redmond)",
+   "repo": "artificialguybr/FILMGRAIN-REDMOND-FLUXKLEIN9B",
+   "file": "[FLUX.2.Klein]FilmGrain_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "look",
+   "strength": 0.6,
+   "trigger": "FILMGRAIN, FilmGrainAF",
+   "keywords": [
+    "film grain",
+    "grainy",
+    "grain"
+   ],
+   "exclude": [],
+   "positive": [
+    "grainy film photograph",
+    "high iso noisy film texture"
+   ],
+   "avoid": [
+    "clean vector"
+   ]
+  },
+  {
+   "id": "redmond_fisheye",
+   "name": "Fish Eye (Redmond)",
+   "repo": "artificialguybr/FISHEYE-REDMOND-FLUXKLEIN",
+   "file": "[FLUX.2.Klein]FishEye_Redmond.safetensors",
+   "license": "apache-2.0",
+   "group": "look",
+   "strength": 0.8,
+   "trigger": "Fish Eye Lens, Fish eye camera.",
+   "keywords": [
+    "fisheye",
+    "fish eye",
+    "fish-eye"
+   ],
+   "exclude": [],
+   "positive": [
+    "fisheye lens wide angle shot",
+    "skateboard fisheye camera photo"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "dever_blueprint",
+   "name": "Blueprint Wireframe (DeverStyle)",
+   "repo": "DeverStyle/Flux.2-Klein-Loras",
+   "file": "dever_blueprint_wireframe_f2k_9b (dvr_wf_style).safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.9,
+   "trigger": "dvr_wf_style",
+   "keywords": [
+    "blueprint",
+    "wireframe",
+    "schematic",
+    "technical drawing"
+   ],
+   "exclude": [],
+   "positive": [
+    "technical blueprint wireframe drawing",
+    "engineering schematic of a machine on blue paper"
+   ],
+   "avoid": [
+    "photograph",
+    "painting"
+   ]
+  },
+  {
+   "id": "dever_orange_splatter",
+   "name": "Orange Splatter Illustration (DeverStyle)",
+   "repo": "DeverStyle/Flux.2-Klein-Loras",
+   "file": "dever_orange_splatter_illustration_f2k_9b (dvr_osi_style).safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "dvr_osi_style",
+   "keywords": [
+    "splatter",
+    "ink splash",
+    "paint splash"
+   ],
+   "exclude": [],
+   "positive": [
+    "bold orange ink splatter illustration",
+    "graphic poster illustration with orange paint splashes"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "dever_teal_dark",
+   "name": "Teal Dark Aesthetic (DeverStyle)",
+   "repo": "DeverStyle/Flux.2-Klein-Loras",
+   "file": "dever_teal_dark_f2k_9b (dvr_tldr_style).safetensors",
+   "license": "apache-2.0",
+   "group": "style",
+   "strength": 0.85,
+   "trigger": "dvr_tldr_style",
+   "keywords": [
+    "teal",
+    "moody",
+    "dark aesthetic"
+   ],
+   "exclude": [],
+   "positive": [
+    "moody dark teal colour graded illustration",
+    "dark teal atmospheric night scene"
+   ],
+   "avoid": [
+    "bright sunny pastel"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,193 @@
+{
+ "1": {
+  "class_type": "ArmyLoraRouter",
+  "inputs": {
+   "prompt": "isometric diorama of a cozy wizard library with floating books",
+   "family": "flux2_klein9b",
+   "max_loras": 3,
+   "strength_scale": 1.0,
+   "min_score_offset": 0.0
+  },
+  "_meta": {
+   "title": "Army of LoRAs: Router (pybed)"
+  }
+ },
+ "2": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "flux-2-klein-base-9b-fp8.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "FLUX.2 klein 9B base fp8"
+  }
+ },
+ "3": {
+  "class_type": "LoraLoaderModelOnly",
+  "inputs": {
+   "model": [
+    "2",
+    0
+   ],
+   "lora_name": "flux-2-klein-9b_extracted_lora_rank_256-fp8e5m2.safetensors",
+   "strength_model": 1.0
+  },
+  "_meta": {
+   "title": "klein 9B distill (4-step)"
+  }
+ },
+ "4": {
+  "class_type": "ArmyLoraApply",
+  "inputs": {
+   "model": [
+    "3",
+    0
+   ],
+   "plan": [
+    "1",
+    0
+   ],
+   "family": "flux2_klein9b"
+  },
+  "_meta": {
+   "title": "Army: apply FLUX LoRAs"
+  }
+ },
+ "5": {
+  "class_type": "CLIPLoader",
+  "inputs": {
+   "clip_name": "qwen_3_8b.safetensors",
+   "type": "flux2",
+   "device": "default"
+  }
+ },
+ "6": {
+  "class_type": "CLIPTextEncode",
+  "inputs": {
+   "text": [
+    "1",
+    1
+   ],
+   "clip": [
+    "5",
+    0
+   ]
+  }
+ },
+ "7": {
+  "class_type": "ConditioningZeroOut",
+  "inputs": {
+   "conditioning": [
+    "6",
+    0
+   ]
+  }
+ },
+ "8": {
+  "class_type": "CFGGuider",
+  "inputs": {
+   "model": [
+    "4",
+    0
+   ],
+   "positive": [
+    "6",
+    0
+   ],
+   "negative": [
+    "7",
+    0
+   ],
+   "cfg": 1.0
+  }
+ },
+ "9": {
+  "class_type": "Flux2Scheduler",
+  "inputs": {
+   "steps": 4,
+   "width": 1024,
+   "height": 1024
+  }
+ },
+ "10": {
+  "class_type": "EmptyFlux2LatentImage",
+  "inputs": {
+   "width": 1024,
+   "height": 1024,
+   "batch_size": 1
+  }
+ },
+ "11": {
+  "class_type": "RandomNoise",
+  "inputs": {
+   "noise_seed": 42
+  }
+ },
+ "12": {
+  "class_type": "KSamplerSelect",
+  "inputs": {
+   "sampler_name": "euler"
+  }
+ },
+ "13": {
+  "class_type": "SamplerCustomAdvanced",
+  "inputs": {
+   "noise": [
+    "11",
+    0
+   ],
+   "guider": [
+    "8",
+    0
+   ],
+   "sampler": [
+    "12",
+    0
+   ],
+   "sigmas": [
+    "9",
+    0
+   ],
+   "latent_image": [
+    "10",
+    0
+   ]
+  }
+ },
+ "14": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "flux2-vae.safetensors"
+  }
+ },
+ "15": {
+  "class_type": "VAEDecode",
+  "inputs": {
+   "samples": [
+    "13",
+    0
+   ],
+   "vae": [
+    "14",
+    0
+   ]
+  }
+ },
+ "16": {
+  "class_type": "ArmyAutoOutput",
+  "inputs": {
+   "plan": [
+    "1",
+    0
+   ],
+   "filename_prefix": "army-of-loras",
+   "flux2_klein9b": [
+    "15",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "Army of LoRAs: Auto Output"
+  }
+ }
+}
