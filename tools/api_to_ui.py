@@ -70,14 +70,16 @@ def convert(api: dict, lanes: dict[str, str], server: str) -> dict:
     heights: dict[str, int] = {}
     for k, node in api.items():
         info = object_info[node["class_type"]]
-        n_slots = len(_inputs(info)) + len(info["output"])
-        multiline = any(isinstance(s[1], dict) and s[1].get("multiline") for _, s, _ in _inputs(info) if len(s) > 1)
-        heights[k] = 46 + 22 * n_slots + (120 if multiline else 0)
+        ins = _inputs(info)
+        n_widgets = sum(_is_widget(spec) for _, spec, _ in ins)
+        n_sockets = max(len(ins) - n_widgets, len(info["output"]))
+        multiline = any(isinstance(sp[1], dict) and sp[1].get("multiline") for _, sp, _ in ins if len(sp) > 1)
+        heights[k] = 60 + 24 * n_sockets + 30 * n_widgets + (140 if multiline else 0)
     for lane in lane_order:
         members = [k for k in api if lanes.get(k) == lane]
         cols: dict[int, int] = {}
         for k in members:
-            cols[depth[k]] = cols.get(depth[k], 0) + heights[k] + 30
+            cols[depth[k]] = cols.get(depth[k], 0) + heights[k] + 50
         lane_y[lane] = y
         y += max(cols.values(), default=200) + 120
 
@@ -116,10 +118,10 @@ def convert(api: dict, lanes: dict[str, str], server: str) -> dict:
         lane = lanes.get(k, "router")
         col = depth[k]
         cy = col_y.get((lane, col), lane_y[lane] + 60)
-        col_y[(lane, col)] = cy + heights[k] + 30
+        col_y[(lane, col)] = cy + heights[k] + 50
         nodes.append({
-            "id": nid, "type": node["class_type"], "pos": [col * 380, cy],
-            "size": [340, heights[k]], "flags": {}, "order": 0, "mode": 0,
+            "id": nid, "type": node["class_type"], "pos": [col * 440, cy],
+            "size": [380, heights[k]], "flags": {}, "order": 0, "mode": 0,
             "inputs": inputs,
             "outputs": [{"name": (info.get("output_name") or info["output"])[i], "type": t, "links": [],
                          "slot_index": i} for i, t in enumerate(info["output"])],

@@ -1,0 +1,81 @@
+[
+ {
+  "kind": "title",
+  "text": "Army of LoRAs. Type one prompt in ComfyUI, and an army of sixty-five community LoRAs decides how to render it, across five open image and video models."
+ },
+ {
+  "kind": "problem",
+  "text": "Hugging Face has thousands of great LoRAs. But which one fits your prompt, on which base model, at what strength, with which trigger word?"
+ },
+ {
+  "kind": "how",
+  "text": "So the router decides. The prompt is embedded with pybed, our static int-eight embedding model. There's no transformer, just a token lookup, so it takes about two milliseconds on the CPU. It scores every LoRA's description, picks image or video, and deploys the model whose army fits best."
+ },
+ {
+  "kind": "army",
+  "text": "I scraped seven hundred and fifty-five adapters, dropped anything adult, any likeness or franchise, and anything unlicensed, then hand-picked sixty-five."
+ },
+ {
+  "kind": "result",
+  "prompt": "a cute sticker of a red panda eating ramen, pixel art",
+  "text": "A sticker of a red panda, in pixel art. FLUX klein, with the Stickers and Pixel Art LoRAs drafted together, one per role."
+ },
+ {
+  "kind": "result",
+  "prompt": "isometric diorama of a cozy wizard library with floating books",
+  "text": "An isometric diorama gets the Isometric LoRA."
+ },
+ {
+  "kind": "result",
+  "prompt": "a crochet amigurumi octopus reading a newspaper on a wooden table",
+  "text": "Crochet amigurumi, straight from the community."
+ },
+ {
+  "kind": "result",
+  "prompt": "a vintage travel poster that says \"VISIT THE MOON\" in bold retro letters",
+  "text": "Lettering goes to Qwen Image, with no style LoRA at all, so the text stays clean."
+ },
+ {
+  "kind": "result",
+  "prompt": "synthwave outrun sunset over a chrome city with a palm-lined highway",
+  "text": "Synthwave on Qwen, with an Outrun LoRA."
+ },
+ {
+  "kind": "result",
+  "prompt": "a monet style garden with a wooden footbridge over a lily pond",
+  "text": "Painterly prompts go to MOSS Image. Monet's garden, with an impressionism LoRA."
+ },
+ {
+  "kind": "result",
+  "prompt": "shot on kodachrome, a 1950s roadside diner at dusk with a red convertible",
+  "text": "A Kodachrome film look."
+ },
+ {
+  "kind": "result",
+  "prompt": "gouache storybook illustration of a fox and a badger sharing tea in the rain",
+  "text": "And vintage gouache."
+ },
+ {
+  "kind": "result",
+  "prompt": "16-bit pixel art video of a fox running through a forest at dusk",
+  "text": "When the prompt moves, it becomes a video. A sixteen-bit fox on MiniMax H3, with sound."
+ },
+ {
+  "kind": "result",
+  "prompt": "video of a knight and a wizard walking through an enchanted forest, 1980s fantasy movie",
+  "text": "An eighties fantasy movie look, plus a human motion LoRA."
+ },
+ {
+  "kind": "result",
+  "prompt": "a paper boat transforms into a glowing koi fish as it drifts down a rainy street, cinematic video",
+  "text": "And a transformation on LTX two point three, with a transition LoRA."
+ },
+ {
+  "kind": "how",
+  "text": "In ComfyUI it's one graph with all five models. Lazy inputs mean only the routed model ever loads, and each drafted LoRA downloads from its author on first use."
+ },
+ {
+  "kind": "end",
+  "text": "Everything is open source: the nodes, workflows, catalog, and credits for every LoRA author. Army of LoRAs, for ComfyUI."
+ }
+]

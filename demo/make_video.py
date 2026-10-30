@@ -91,11 +91,11 @@ def slide_how() -> Image.Image:
     boxes = [("prompt", "SFW gate"), ("pybed embed", "int8 static, 512-d"), ("image or video?", "motion cues"),
              ("score the army", "cos(positive) - avoid + keyword"), ("pick the model", "best army fit"),
              ("draft LoRAs", "1 per group, by confidence"), ("ComfyUI graph", "only that branch runs")]
-    bw, bh, gap, y0 = 230, 150, 34, 330
+    bw, bh, gap, y0 = 236, 150, 26, 330
     x = 70
     for i, (a, b) in enumerate(boxes):
         d.rounded_rectangle((x, y0, x + bw, y0 + bh), 18, fill=PANEL, outline=ACCENT if i in (1, 3, 4) else LINE, width=3)
-        d.text((x + 16, y0 + 26), a, font=font(28, True), fill=TEXT)
+        d.text((x + 14, y0 + 26), a, font=font(23, True), fill=TEXT)
         wrap(d, (x + 16, y0 + 72), b, font(21), DIM, bw - 30, 4)
         if i < len(boxes) - 1:
             ax = x + bw + 4
